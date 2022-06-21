@@ -152,17 +152,17 @@ relevance.</li><li>[x]  Works with Phoenix View and Phoenix LiveView</li><li>[x]
   </a>
   Installation
 </h2>
-<p>Before this projects reaches the 1.0-milestone, you can install it by adding the Github address of <code class="inline">phoenix_localized_routes</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="9665132854-1">do</span><span class="w">
-  </span><span class="p" data-group-id="9665132854-2">[</span><span class="w">
-    </span><span class="p" data-group-id="9665132854-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="9665132854-3">}</span><span class="w">
-  </span><span class="p" data-group-id="9665132854-2">]</span><span class="w">
-</span><span class="k" data-group-id="9665132854-1">end</span></code></pre><h2 id="technical-notes" class="section-heading">
+<p>Before this projects reaches the 1.0-milestone, you can install it by adding the Github address of <code class="inline">phoenix_localized_routes</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="4339439433-1">do</span><span class="w">
+  </span><span class="p" data-group-id="4339439433-2">[</span><span class="w">
+    </span><span class="p" data-group-id="4339439433-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="4339439433-3">}</span><span class="w">
+  </span><span class="p" data-group-id="4339439433-2">]</span><span class="w">
+</span><span class="k" data-group-id="4339439433-1">end</span></code></pre><h2 id="technical-notes" class="section-heading">
   <a href="#technical-notes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">technical-notes</p>
   </a>
   Technical Notes
 </h2>
-<p>Phoenix Localized Routes makes use of <a href="https://hexdocs.pm/elixir/Macro.html"><code class="inline">Macro</code></a>'s to wrap Phoenix Router and Phoenix Router Helpers. It generates alternate helpers and paths based on the routes defined in <code class="inline">[YourApp].Routes</code>. Alternate routes are generated at compile time; making them just as fast as the explicitly defined routes.</p><p>If a wrapped function call fails, the original function will be called to ensure your application always links to an available page.</p><p>To set the custom assigns for use in templates, a <code class="inline">Conn.Plug</code> and a helper module with  <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback are included.</p>
+<p>PhxLocalizedRoutes makes use of <a href="https://hexdocs.pm/elixir/Macro.html"><code class="inline">Macro</code></a>'s to wrap Phoenix Router and Phoenix Router Helpers. It generates alternate helpers and paths based on the routes defined in <code class="inline">[YourApp].Routes</code>. Alternate routes are generated at compile time; making them just as fast as the explicitly defined routes.</p><p>If a wrapped function call fails, the original function will be called to ensure your application always links to an available page.</p><p>To set the custom assigns for templates, a <code class="inline">Conn.Plug</code> and a helper module with  <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback are included.</p>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 
