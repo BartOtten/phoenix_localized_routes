@@ -102,9 +102,9 @@ Phoenix Localized Routes
   <span>README</span>
 </h1>
 
-<p><img src="https://img.shields.io/coveralls/github/BartOtten/phx_alt_routes_priv" alt="Coveralls"/>
-<a href="https://github.com/BartOtten/phx_alt_routes_priv/actions/workflows/elixir.yml"><img src="https://github.com/BartOtten/phx_alt_routes_priv/actions/workflows/elixir.yml/badge.svg?event=push" alt="Build Status"/></a>
-<a href="https://github.com/BartOtten/phx_alt_routes_priv/commits/main"><img src="https://img.shields.io/github/last-commit/BartOtten/phx_alt_routes_priv.svg" alt="Last Updated"/></a></p><h1>Phoenix Localized Routes</h1><p>Localize your Phoenix website with multilingual URL's and custom template assigns; enhancing 
+<p><img src="https://img.shields.io/coveralls/github/BartOtten/phoenix_localized_routes" alt="Coveralls"/>
+<a href="https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml"><img src="https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml/badge.svg?event=push" alt="Build Status"/></a>
+<a href="https://github.com/BartOtten/phoenix_localized_routes/commits/main"><img src="https://img.shields.io/github/last-commit/BartOtten/phoenix_localized_routes.svg" alt="Last Updated"/></a></p><h1>Phoenix Localized Routes</h1><p>Localize your Phoenix website with multilingual URL's and custom template assigns; enhancing 
 user engagement and content relevance.</p><pre><code class="makeup elixir" translate="no"><span class="w">                    </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">          </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;int@company.com&quot;</span><span class="w">
 </span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">nl</span><span class="o">/</span><span class="n">producten</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">bewerken</span><span class="w">  </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;netherlands@company.com&quot;</span><span class="w">
                     </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">es</span><span class="o">/</span><span class="n">producto</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">editar</span><span class="w">     </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spain@company.com&quot;</span></code></pre><h2 id="features-and-benefits" class="section-heading">
@@ -120,7 +120,7 @@ relevance.</li><li>[x]  Works with Phoenix View and Phoenix LiveView</li><li>[x]
   </a>
   Status
 </h2>
-<p>This lib will soon be published on Hex. In the meantime the documentation can be found at <a href="https://bartotten.github.io/phx_alt_routes_priv/">Github Pages</a></p><h2 id="usage-summary" class="section-heading">
+<p>This lib will soon be published on Hex. In the meantime the documentation can be found at <a href="https://bartotten.github.io/phoenix_localized_routes/">Github Pages</a></p><h2 id="usage-summary" class="section-heading">
   <a href="#usage-summary" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">usage-summary</p>
   </a>
@@ -152,11 +152,11 @@ relevance.</li><li>[x]  Works with Phoenix View and Phoenix LiveView</li><li>[x]
   </a>
   Installation
 </h2>
-<p>Before this projects reaches the 1.0-milestone, you can install it by adding the Github address of <code class="inline">phoenix_localized_routes</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="1820332091-1">do</span><span class="w">
-  </span><span class="p" data-group-id="1820332091-2">[</span><span class="w">
-    </span><span class="p" data-group-id="1820332091-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="1820332091-3">}</span><span class="w">
-  </span><span class="p" data-group-id="1820332091-2">]</span><span class="w">
-</span><span class="k" data-group-id="1820332091-1">end</span></code></pre><h2 id="technical-notes" class="section-heading">
+<p>Before this projects reaches the 1.0-milestone, you can install it by adding the Github address of <code class="inline">phoenix_localized_routes</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="7219357968-1">do</span><span class="w">
+  </span><span class="p" data-group-id="7219357968-2">[</span><span class="w">
+    </span><span class="p" data-group-id="7219357968-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="7219357968-3">}</span><span class="w">
+  </span><span class="p" data-group-id="7219357968-2">]</span><span class="w">
+</span><span class="k" data-group-id="7219357968-1">end</span></code></pre><h2 id="technical-notes" class="section-heading">
   <a href="#technical-notes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">technical-notes</p>
   </a>
