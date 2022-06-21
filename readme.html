@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="Phoenix Localized Routes v0.1.0">
+
+    <title>README — Phoenix Localized Routes v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-221ae6dcef.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+Phoenix Localized Routes
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/README.md#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span>README</span>
+</h1>
+
+<p><img src="https://img.shields.io/coveralls/github/BartOtten/phx_alt_routes_priv" alt="Coveralls"/>
+<a href="https://github.com/BartOtten/phx_alt_routes_priv/actions/workflows/elixir.yml"><img src="https://github.com/BartOtten/phx_alt_routes_priv/actions/workflows/elixir.yml/badge.svg?event=push" alt="Build Status"/></a>
+<a href="https://github.com/BartOtten/phx_alt_routes_priv/commits/main"><img src="https://img.shields.io/github/last-commit/BartOtten/phx_alt_routes_priv.svg" alt="Last Updated"/></a></p><h1>Phoenix Localized Routes</h1><p>Localize your Phoenix website with multilingual URL's and custom template assigns; enhancing 
+user engagement and content relevance.</p><pre><code class="makeup elixir" translate="no"><span class="w">                    </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">          </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;int@company.com&quot;</span><span class="w">
+</span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">nl</span><span class="o">/</span><span class="n">producten</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">bewerken</span><span class="w">  </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;netherlands@company.com&quot;</span><span class="w">
+                    </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">es</span><span class="o">/</span><span class="n">producto</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">editar</span><span class="w">     </span><span class="na">@loc</span><span class="o">.</span><span class="n">contact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;spain@company.com&quot;</span></code></pre><h2 id="features-and-benefits" class="section-heading">
+  <a href="#features-and-benefits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">features-and-benefits</p>
+  </a>
+  Features and Benefits
+</h2>
+<ul><li>[x]  URL matches language of content which can enhance user engagement and content
+relevance.</li><li>[x]  Works with Phoenix View and Phoenix LiveView</li><li>[x]  Unlimited nesting</li><li>[x]  Supports dynamic nesting (eg. <code class="inline">/{continent}/{county}/{page}</code> <em>and</em> <code class="inline">/{country}/{page}</code>)</li><li>[x]  Less boilerplate in your <code class="inline">routes.ex</code></li><li>[x]  Generates routes at compile time; no performance penalty!</li><li>[x]  Easily add custom assigns to your (localized) routes</li><li>[x]  Easily generate links to matching pages in other locales</li><li>[x]  Can be used for non-locale alternate routing (eg. <code class="inline">/{sport}/{activity}</code>)</li></ul><h2 id="status" class="section-heading">
+  <a href="#status" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">status</p>
+  </a>
+  Status
+</h2>
+<p>This lib will soon be published on Hex. In the meantime the documentation can be found at <a href="https://bartotten.github.io/phx_alt_routes_priv/">Github Pages</a></p><h2 id="usage-summary" class="section-heading">
+  <a href="#usage-summary" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">usage-summary</p>
+  </a>
+  Usage Summary
+</h2>
+<ul><li>Add a few line of code to your <a href="https://hexdocs.pm/phoenix/1.6.6/Phoenix.html"><code class="inline">Phoenix</code></a> application.</li><li>Add a configuration file describing which alternate routes to generate.</li><li>Optionally:<ul><li>Run <code class="inline">mix gettext.extract --merge</code>.</li><li>Translate the URL parts like any other translatable text.</li></ul></li><li>Run <a href="https://hexdocs.pm/phoenix/1.6.6/Mix.Tasks.Phx.Routes.html"><code class="inline">mix phx.routes</code></a> to verify the result.</li></ul><p>All links in your application will now automatically use the routes for the set locale.</p><p>The full guide is written in the <a href="usage.html">Usage Guide</a>.</p><h2 id="requirements" class="section-heading">
+  <a href="#requirements" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">requirements</p>
+  </a>
+  Requirements
+</h2>
+<ul><li>Elixir &gt;=1.11</li><li>Phoenix &gt;= 1.6.0</li><li>Phoenix LiveView &gt;= 0.16 (optional)</li></ul><h2 id="example" class="section-heading">
+  <a href="#example" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">example</p>
+  </a>
+  Example
+</h2>
+<p>An example Phoenix application showing the (nested) routes and custom assigns.</p><pre><code class="makeup elixir" translate="no"><span class="n">git</span><span class="w"> </span><span class="n">clone</span><span class="w"> </span><span class="n">https</span><span class="ss">://</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="nc">BartOtten</span><span class="o">/</span><span class="n">phoenix_localized_routes_example</span><span class="o">.</span><span class="n">git</span><span class="w">
+</span><span class="n">cd</span><span class="w"> </span><span class="n">phoenix_localized_routes_example</span><span class="w">
+</span><span class="n">iex</span><span class="w"> </span><span class="o">-</span><span class="nc">S</span><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">phx</span><span class="o">.</span><span class="n">server</span><span class="w">
+
+</span><span class="n">http</span><span class="ss">://</span><span class="n">localhost</span><span class="p">:</span><span class="mi">4000</span><span class="o">/</span><span class="w">
+</span><span class="n">http</span><span class="ss">://</span><span class="n">localhost</span><span class="p">:</span><span class="mi">4000</span><span class="o">/</span><span class="n">europe</span><span class="w">
+
+</span><span class="n">http</span><span class="ss">://</span><span class="n">localhost</span><span class="p">:</span><span class="mi">4000</span><span class="o">/</span><span class="n">products</span><span class="w">
+</span><span class="n">http</span><span class="ss">://</span><span class="n">localhost</span><span class="p">:</span><span class="mi">4000</span><span class="o">/</span><span class="n">europe</span><span class="o">/</span><span class="n">nl</span><span class="o">/</span><span class="n">producten</span><span class="o">/</span></code></pre><h2 id="installation" class="section-heading">
+  <a href="#installation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">installation</p>
+  </a>
+  Installation
+</h2>
+<p>Before this projects reaches the 1.0-milestone, you can install it by adding the Github address of <code class="inline">phoenix_localized_routes</code> to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="1820332091-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1820332091-2">[</span><span class="w">
+    </span><span class="p" data-group-id="1820332091-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="1820332091-3">}</span><span class="w">
+  </span><span class="p" data-group-id="1820332091-2">]</span><span class="w">
+</span><span class="k" data-group-id="1820332091-1">end</span></code></pre><h2 id="technical-notes" class="section-heading">
+  <a href="#technical-notes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">technical-notes</p>
+  </a>
+  Technical Notes
+</h2>
+<p>PhxLocalizedRoutes makes use of <a href="https://hexdocs.pm/elixir/Macro.html"><code class="inline">Macro</code></a>'s to wrap Phoenix Router and Phoenix Router Helpers. It generates alternate helpers and paths based on the routes defined in <code class="inline">[YourApp].Routes</code>. Alternate routes are generated at compile time; making them just as fast as the explicitly defined routes.</p><p>If a wrapped function call fails, the original function will be called to ensure your application always links to an available page.</p><p>To set the custom assigns for templates, a <code class="inline">Conn.Plug</code> and a helper module with  <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback are included.</p>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="api-reference.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+API Reference
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="usage.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Usage
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

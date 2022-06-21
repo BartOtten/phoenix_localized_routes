@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="Phoenix Localized Routes v0.1.0">
+
+    <title>PhxLocalizedRoutes.Helpers — Phoenix Localized Routes v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-221ae6dcef.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+Phoenix Localized Routes
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes/helpers.ex#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span translate="no">PhxLocalizedRoutes.Helpers</span> 
+  <small class="app-vsn" translate="no">(Phoenix Localized Routes v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Helpers to be used in views and controllers.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#loc_route/2" translate="no">loc_route(orig_route, loc_opts \\ nil)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Marco used to wrap a Phoenix route and transform it into a localized
+route. The localized routes use the <code class="inline">:scope_helper</code> to alter
+the destination (alias) of the route on render.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="loc_route/2">
+
+    <span id="loc_route/1"></span>
+
+  <div class="detail-header">
+    <a href="#loc_route/2" class="detail-link" title="Link to this macro">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature" translate="no">loc_route(orig_route, loc_opts \\ nil)</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes/helpers.ex#L42" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>Marco used to wrap a Phoenix route and transform it into a localized
+route. The localized routes use the <code class="inline">:scope_helper</code> to alter
+the destination (alias) of the route on render.</p><p>By default it uses the <code class="inline">scope_helper</code> from <a href="https://hexdocs.pm/phoenix_live_view/0.17.7/Phoenix.LiveView.Socket.html"><code class="inline">Phoenix.LiveView.Socket</code></a> or <a href="https://hexdocs.pm/plug/1.13.2/Plug.Conn.html"><code class="inline">Plug.Conn</code></a>, keeping
+the user in it's current locale / scope. A custom <code class="inline">:scope_helper</code> can be provided through
+assigns in <code class="inline">loc_opts</code>.</p><p><strong>Example</strong></p><pre><code class="makeup elixir" translate="no"><span class="nc">Routes</span><span class="o">.</span><span class="n">product_index_path</span><span class="p" data-group-id="3571175541-1">(</span><span class="na">@socket</span><span class="p">,</span><span class="w"> </span><span class="ss">:index</span><span class="p" data-group-id="3571175541-1">)</span><span class="w">
+</span><span class="o">/</span><span class="n">products</span><span class="w">
+
+</span><span class="n">loc_opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3571175541-2">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3571175541-3">%{</span><span class="ss">scope_helper</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;eu_nl&quot;</span><span class="p" data-group-id="3571175541-3">}</span><span class="p" data-group-id="3571175541-2">}</span><span class="w">
+</span><span class="n">loc_route</span><span class="p" data-group-id="3571175541-4">(</span><span class="nc">Routes</span><span class="o">.</span><span class="n">product_index_path</span><span class="p" data-group-id="3571175541-5">(</span><span class="na">@socket</span><span class="p">,</span><span class="w"> </span><span class="ss">:index</span><span class="p" data-group-id="3571175541-5">)</span><span class="p">,</span><span class="w"> </span><span class="n">loc_opts</span><span class="p" data-group-id="3571175541-4">)</span><span class="w">
+</span><span class="o">/</span><span class="n">eu</span><span class="o">/</span><span class="n">nl</span><span class="o">/</span><span class="n">products</span></code></pre><p>When no <code class="inline">:scope_helper</code> is found or when no matching helper function is exported, an
+error is logged and the original link will be returned.</p><p><strong>Example: Generate links to all other localized routes of the product index</strong></p><pre><code class="makeup elixir" translate="no"><span class="o">&lt;</span><span class="o">!</span><span class="o">--</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">aliased</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="nc">Loc</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">view_helpers</span><span class="p" data-group-id="0032704787-1">(</span><span class="p" data-group-id="0032704787-1">)</span><span class="w"> </span><span class="o">--</span><span class="o">&gt;</span><span class="w">
+</span><span class="o">&lt;</span><span class="o">!</span><span class="o">--</span><span class="w"> </span><span class="n">loc_route</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">imported</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="nc">PhxLocalizedRoutes.Helpers</span><span class="w"> </span><span class="o">--</span><span class="o">&gt;</span><span class="w">
+</span><span class="o">&lt;</span><span class="p">%</span><span class="o">=</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p" data-group-id="0032704787-2">{</span><span class="n">slug</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="0032704787-2">}</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nc">Loc</span><span class="o">.</span><span class="n">scopes</span><span class="p" data-group-id="0032704787-3">(</span><span class="p" data-group-id="0032704787-3">)</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="o">.</span><span class="n">assigns</span><span class="o">.</span><span class="n">scope_helper</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="na">@loc</span><span class="o">.</span><span class="n">scope_helper</span><span class="w"> </span><span class="k" data-group-id="0032704787-4">do</span><span class="w"> </span><span class="p">%</span><span class="o">&gt;</span><span class="w">
+    </span><span class="o">&lt;</span><span class="n">span</span><span class="o">&gt;</span><span class="w">
+      </span><span class="o">&lt;</span><span class="p">%</span><span class="o">=</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="s">&quot; [</span><span class="si" data-group-id="0032704787-5">#{</span><span class="n">slug</span><span class="si" data-group-id="0032704787-5">}</span><span class="s">] &quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">to</span><span class="p">:</span><span class="w"> </span><span class="n">loc_route</span><span class="p" data-group-id="0032704787-6">(</span><span class="nc">Routes</span><span class="o">.</span><span class="n">product_index_path</span><span class="p" data-group-id="0032704787-7">(</span><span class="na">@socket</span><span class="p">,</span><span class="w"> </span><span class="ss">:index</span><span class="p" data-group-id="0032704787-7">)</span><span class="p">,</span><span class="w"> </span><span class="n">opts</span><span class="p" data-group-id="0032704787-6">)</span><span class="w"> </span><span class="p">%</span><span class="o">&gt;</span><span class="o">&lt;</span><span class="o">/</span><span class="n">span</span><span class="o">&gt;</span><span class="w">
+</span><span class="o">&lt;</span><span class="p">%</span><span class="w"> </span><span class="k" data-group-id="0032704787-4">end</span><span class="w"> </span><span class="p">%</span><span class="o">&gt;</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

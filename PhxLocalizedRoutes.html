@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.4">
+    <meta name="project" content="Phoenix Localized Routes v0.1.0">
+
+    <title>PhxLocalizedRoutes — Phoenix Localized Routes v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
+
+    <script src="dist/sidebar_items-221ae6dcef.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-bd1cb213813bf4825aa2.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+Phoenix Localized Routes
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L58" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span translate="no">PhxLocalizedRoutes</span> <small>behaviour</small>
+  <small class="app-vsn" translate="no">(Phoenix Localized Routes v0.1.0)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Macro to create and validate <a href="PhxLocalizedRoutes.html#content"><code class="inline">PhxLocalizedRoutes</code></a> configuration module with
+convenience callbacks to fetch specific values. It also creates a LiveHelper
+module to be used in LiveView projects.  For maximum performance, most functions
+return values including additional data computed at compile time.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:opts/0" translate="no">opts()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:scope_map/0" translate="no">scope_map()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><pre><code class="makeup elixir" translate="no"><span class="nc">Type</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">represents</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="n">key</span><span class="o">/</span><span class="n">values</span><span class="o">.</span></code></pre></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:scopes/0" translate="no">scopes()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:scopes_map/0" translate="no">scopes_map()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:scopes_nested/0" translate="no">scopes_nested()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:assigned_values/1" translate="no">assigned_values(key_or_keys)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Return a list of unique values assigned to given key. Returns a list of tuples
+with unique combinations when a list of keys is given.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:config/0" translate="no">config()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns the configuration with precomputed values and flattened scopes</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:get_scope/1" translate="no">get_scope(scope_helper)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Return the configuration of given scope helper</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:scopes/0" translate="no">scopes()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Return the scopes in a flat structure</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#c:scopes_nested/0" translate="no">scopes_nested()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Return the scopes in a nested structure</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:opts/0">
+
+  <div class="detail-header">
+    <a href="#t:opts/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">opts()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L78" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> opts() :: [scopes: <a href="#t:scopes_map/0">scopes_map</a>(), gettext_module: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()]</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:scope_map/0">
+
+  <div class="detail-header">
+    <a href="#t:scope_map/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">scope_map()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L71" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> scope_map() :: %{
+  assign: %{required(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>()) =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()} | nil,
+  scopes: <a href="#t:scopes_map/0">scopes_map</a>() | nil
+}</pre>
+
+      </div>
+
+<pre><code class="makeup elixir" translate="no"><span class="nc">Type</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">represents</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">containing</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="n">key</span><span class="o">/</span><span class="n">values</span><span class="o">.</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="t:scopes/0">
+
+  <div class="detail-header">
+    <a href="#t:scopes/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">scopes()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L77" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> scopes() :: <a href="PhxLocalizedRoutes.Config.html#t:scopes/0">PhxLocalizedRoutes.Config.scopes</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:scopes_map/0">
+
+  <div class="detail-header">
+    <a href="#t:scopes_map/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_map()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L75" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> scopes_map() :: %{required(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()) =&gt; <a href="#t:scope_map/0">scope_map</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:scopes_nested/0">
+
+  <div class="detail-header">
+    <a href="#t:scopes_nested/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_nested()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L76" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@type</span> scopes_nested() :: %{required(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>()) =&gt; PhxLocalizedRoutes.Scope.Nested.t()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Callbacks
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:assigned_values/1">
+
+  <div class="detail-header">
+    <a href="#c:assigned_values/1" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">assigned_values(key_or_keys)</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L104" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> assigned_values(key_or_keys :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>() | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">list</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">list</a>()</pre>
+
+      </div>
+
+<p>Return a list of unique values assigned to given key. Returns a list of tuples
+with unique combinations when a list of keys is given.</p><p><strong>Example</strong></p><pre><code class="makeup elixir" translate="no"><span class="gp unselectable">iex&gt; </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="o">.</span><span class="n">assigned_values</span><span class="p" data-group-id="8198340826-1">(</span><span class="ss">:locale</span><span class="p" data-group-id="8198340826-1">)</span><span class="w">
+</span><span class="p" data-group-id="8198340826-2">[</span><span class="s">&quot;en&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nl&quot;</span><span class="p" data-group-id="8198340826-2">]</span><span class="w">
+
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="o">.</span><span class="n">assigned_values</span><span class="p" data-group-id="8198340826-3">(</span><span class="p" data-group-id="8198340826-4">[</span><span class="ss">:locale</span><span class="p">,</span><span class="w"> </span><span class="ss">:locale</span><span class="p" data-group-id="8198340826-4">]</span><span class="p" data-group-id="8198340826-3">)</span><span class="w">
+</span><span class="p" data-group-id="8198340826-5">[</span><span class="p" data-group-id="8198340826-6">{</span><span class="s">&quot;en&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;en-GB&quot;</span><span class="p" data-group-id="8198340826-6">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8198340826-7">{</span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nl-NL&quot;</span><span class="p" data-group-id="8198340826-7">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8198340826-8">{</span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;nl_BE&quot;</span><span class="p" data-group-id="8198340826-8">}</span><span class="p" data-group-id="8198340826-5">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="c:config/0">
+
+  <div class="detail-header">
+    <a href="#c:config/0" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">config()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L107" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> config() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Returns the configuration with precomputed values and flattened scopes</p>
+  </section>
+</section>
+<section class="detail" id="c:get_scope/1">
+
+  <div class="detail-header">
+    <a href="#c:get_scope/1" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">get_scope(scope_helper)</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L91" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> get_scope(scope_helper :: nil | <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Return the configuration of given scope helper</p>
+  </section>
+</section>
+<section class="detail" id="c:scopes/0">
+
+  <div class="detail-header">
+    <a href="#c:scopes/0" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">scopes()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L85" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> scopes() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Return the scopes in a flat structure</p>
+  </section>
+</section>
+<section class="detail" id="c:scopes_nested/0">
+
+  <div class="detail-header">
+    <a href="#c:scopes_nested/0" class="detail-link" title="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_nested()</h1>
+
+      <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes.ex#L88" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">@callback</span> scopes_nested() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()</pre>
+
+      </div>
+
+<p>Return the scopes in a nested structure</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.4) for the
+
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
