@@ -10,7 +10,7 @@
     <title>PhxLocalizedRoutes.Exceptions.MissingRootSlugError — Phoenix Localized Routes v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
-    <script src="dist/sidebar_items-221ae6dcef.js"></script>
+    <script src="dist/sidebar_items-c00ab84c14.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -94,7 +94,7 @@ Phoenix Localized Routes
 </button>
 
 
-    <a href="https://github.com/BartOtten/phx_loc_routes/blob/v0.0.1-dev/lib/localized_routes/exceptions.ex#L48" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/exceptions.ex#L48" title="View Source" class="view-source" rel="help">
       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
@@ -106,24 +106,40 @@ Phoenix Localized Routes
 
 
   <section id="moduledoc">
-<p>Raised when the scope map does not start with the root scope &quot;/&quot;.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="0993986539-1">%{</span><span class="w">
-  </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0993986539-2">%{</span><span class="w">
-    </span><span class="s">&quot;/first&quot;</span><span class="w">       </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="0993986539-3">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0993986539-4">%{</span><span class="ss">key1</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0993986539-4">}</span><span class="p" data-group-id="0993986539-3">}</span><span class="p">,</span><span class="w">
-    </span><span class="s">&quot;/other&quot;</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="0993986539-5">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0993986539-6">%{</span><span class="ss">key1</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0993986539-6">}</span><span class="p" data-group-id="0993986539-5">}</span><span class="p" data-group-id="0993986539-2">}</span><span class="p">,</span><span class="w">
-</span><span class="p" data-group-id="0993986539-1">}</span></code></pre><p>To fix this, include a scope for the root &quot;/&quot;.</p><pre><code class="makeup elixir" translate="no"><span class="err">`</span><span class="p" data-group-id="7055647454-1">%{</span><span class="w">
-  </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7055647454-2">%{</span><span class="w">
-    </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="7055647454-3">%{</span><span class="w">
-    </span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7055647454-4">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="7055647454-4">}</span><span class="w">
+<p>Raised when the scope map does not start with the root scope &quot;/&quot;.</p><pre><code class="makeup elixir" translate="no"><span class="p" data-group-id="8669281243-1">%{</span><span class="w">
+  </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8669281243-2">%{</span><span class="w">
+    </span><span class="s">&quot;/first&quot;</span><span class="w">       </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="8669281243-3">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8669281243-4">%{</span><span class="ss">key1</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8669281243-4">}</span><span class="p" data-group-id="8669281243-3">}</span><span class="p">,</span><span class="w">
+    </span><span class="s">&quot;/other&quot;</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="8669281243-5">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8669281243-6">%{</span><span class="ss">key1</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="8669281243-6">}</span><span class="p" data-group-id="8669281243-5">}</span><span class="p" data-group-id="8669281243-2">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="8669281243-1">}</span></code></pre><p>To fix this, include a scope for the root &quot;/&quot;.</p><pre><code class="makeup elixir" translate="no"><span class="err">`</span><span class="p" data-group-id="2583690973-1">%{</span><span class="w">
+  </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2583690973-2">%{</span><span class="w">
+    </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2583690973-3">%{</span><span class="w">
+    </span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2583690973-4">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="2583690973-4">}</span><span class="w">
     </span><span class="ss">scopes</span><span class="p">:</span><span class="w">
-      </span><span class="s">&quot;/first&quot;</span><span class="w">       </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="7055647454-5">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7055647454-6">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7055647454-6">}</span><span class="p" data-group-id="7055647454-5">}</span><span class="p">,</span><span class="w">
-      </span><span class="s">&quot;/other&quot;</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="7055647454-7">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7055647454-8">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7055647454-8">}</span><span class="p" data-group-id="7055647454-7">}</span><span class="p" data-group-id="7055647454-3">}</span><span class="p">,</span><span class="w">
-   </span><span class="p" data-group-id="7055647454-2">}</span><span class="w">
-</span><span class="p" data-group-id="7055647454-1">}</span></code></pre>
+      </span><span class="s">&quot;/first&quot;</span><span class="w">       </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="2583690973-5">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2583690973-6">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2583690973-6">}</span><span class="p" data-group-id="2583690973-5">}</span><span class="p">,</span><span class="w">
+      </span><span class="s">&quot;/other&quot;</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">    </span><span class="p" data-group-id="2583690973-7">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2583690973-8">%{</span><span class="ss">level</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="2583690973-8">}</span><span class="p" data-group-id="2583690973-7">}</span><span class="p" data-group-id="2583690973-3">}</span><span class="p">,</span><span class="w">
+   </span><span class="p" data-group-id="2583690973-2">}</span><span class="w">
+</span><span class="p" data-group-id="2583690973-1">}</span></code></pre>
   </section>
 
 
 
       <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/phoenix_localized_routes/0.1.0" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0/show/lib/localized_routes/exceptions.ex">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
 
         <p>
           Built using
