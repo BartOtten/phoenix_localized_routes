@@ -14,6 +14,7 @@ defmodule PhxLocalizedRoutes.MixProject do
       aliases: aliases(),
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: compilers(Mix.env()),
+      dialyzer: dialyzer(),
       # Docs
       name: @name,
       description: description(),
@@ -48,6 +49,8 @@ defmodule PhxLocalizedRoutes.MixProject do
 
   defp compilers(:test), do: [:gettext] ++ Mix.compilers()
   defp compilers(_), do: Mix.compilers()
+
+  defp dialyzer, do: [plt_add_apps: [:mix, :gettext, :phoenix_live_view]]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
