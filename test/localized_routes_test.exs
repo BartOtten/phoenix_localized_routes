@@ -40,6 +40,7 @@ defmodule PhxLocalizedRoutesTest do
   alias PhxLocalizedRoutes.Exceptions.MissingRootSlugError
   alias PhxLocalizedRoutes.Private, as: P
   alias PhxLocalizedRoutes.Scope
+  alias PhxLocalizedRoutes.Config
 
   alias My.Assigns
 
@@ -166,25 +167,25 @@ defmodule PhxLocalizedRoutesTest do
   describe "test private functions" do
     test "validate opts raises on assign keys mismatch" do
       assert_raise AssignsMismatchError, fn ->
-        P.validate_config!(%{
+        P.validate_config!(%Config{
           scopes: %{
             nil => %{
               scope_prefix: "/",
-              assign: %{key1: 1, key2: 2},
-              scopes: %{"foo" => %{assign: %{key1: 1}}}
-            }
+              assign: %{key1: 1, key2: 2}
+            },
+            "foo" => %{assign: %{key1: 1}}
           }
         })
       end
     end
 
     test "validate opts does not raise when no assigns" do
-      P.validate_config!(%{
+      P.validate_config!(%Config{
         scopes: %{
           nil => %{
-            scope_prefix: "/",
-            scopes: %{"foo" => %{}}
-          }
+            scope_prefix: "/"
+          },
+          "foo" => %{}
         }
       })
     end
@@ -192,13 +193,13 @@ defmodule PhxLocalizedRoutesTest do
     test "validate opts does not raise when assign keys match" do
       matching_assign = %{key1: 1, key2: 2}
 
-      P.validate_config!(%{
+      P.validate_config!(%Config{
         scopes: %{
           nil => %{
             scope_prefix: "/",
-            assign: matching_assign,
-            scopes: %{"foo" => %{assign: matching_assign}}
-          }
+            assign: matching_assign
+          },
+          "foo" => %{assign: matching_assign}
         }
       })
     end
@@ -213,24 +214,24 @@ defmodule PhxLocalizedRoutesTest do
 
     test "validate opts raises when gettext_module is set but no locale in assign" do
       assert_raise MissingLocaleAssignError, fn ->
-        P.validate_config!(%{
+        P.validate_config!(%Config{
           gettext_module: MyGettextModule,
-          scopes: %{"foo" => %{assign: %{key1: 1}}}
+          scopes: %{nil => %{scope_prefix: "/", assign: %{key1: 1}}}
         })
       end
     end
 
     test "validate opts does not raise when gettext_module is set and locale in assign" do
-      P.validate_config!(%{
+      P.validate_config!(%Config{
         gettext_module: MyGettextModule,
-        scopes: %{"foo" => %{scope_prefix: "/", assign: %{locale: "de"}}}
+        scopes: %{nil => %{scope_prefix: "/", assign: %{locale: "de"}}}
       })
     end
 
     test "validate opts does not raise when gettext_module is set to nil" do
-      P.validate_config!(%{
+      P.validate_config!(%Config{
         gettext_module: nil,
-        scopes: %{"foo" => %{scope_prefix: "/", assign: %{locale: "de"}}}
+        scopes: %{nil => %{scope_prefix: "/", assign: %{locale: "de"}}}
       })
     end
 
