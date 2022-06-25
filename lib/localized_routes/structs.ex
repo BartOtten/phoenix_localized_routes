@@ -1,6 +1,6 @@
 defmodule PhxLocalizedRoutes.Scope.Nested do
   @moduledoc """
-  Struct for scopes with nested scopes
+  Struct for scope with optionally nested scopes
   """
   @type t :: %__MODULE__{
           assign: %{atom => any} | nil,
@@ -23,7 +23,7 @@ end
 
 defmodule PhxLocalizedRoutes.Scope.Flat do
   @moduledoc """
-  Struct for flattened scopes
+  Struct for flattened scope
   """
   @type t :: %__MODULE__{
           assign: %{atom => any} | nil,
