@@ -206,7 +206,7 @@ defmodule PhxLocalizedRoutesTest do
 
     test "validate opts raises when no root slug is set" do
       assert_raise MissingRootSlugError, fn ->
-        P.validate_config!(%{
+        P.validate_config!(%Config{
           scopes: %{nil => %{scope_prefix: "foo", assign: %{key1: 1}}}
         })
       end
@@ -249,7 +249,7 @@ defmodule PhxLocalizedRoutesTest do
 
     test "print_compile_header does not print when no Gettext module is set or auto compilation detected" do
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header(%{module: TestRouter}, false, %{
+               P.print_compile_header(TestRouter, false, %{
                  scopes: @scopes_flat
                })
              end) == ""
@@ -257,7 +257,7 @@ defmodule PhxLocalizedRoutesTest do
 
     test "print_compile_header does print when a Gettext module is set and no auto compilation is detected" do
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header(%{module: TestRouter}, false, %{
+               P.print_compile_header(TestRouter, false, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
