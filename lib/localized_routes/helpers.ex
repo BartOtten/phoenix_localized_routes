@@ -38,7 +38,7 @@ defmodule PhxLocalizedRoutes.Helpers do
   <% end %>
   ```
   """
-
+  @spec loc_route(orig_route :: Macro.t(), loc_opts :: Macro.t()) :: Macro.output()
   defmacro loc_route(orig_route, loc_opts \\ nil) do
     {helper_module, orig_helper_fn, conn_or_socket, args} = Private.fetch_vars(orig_route)
 

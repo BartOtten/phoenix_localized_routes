@@ -7,6 +7,7 @@ defmodule PhxLocalizedRoutes.LiveHelpers do
   """
 
   alias Phoenix.LiveView.Socket
+  alias PhxLocalizedRoutes.Config
   require Logger
 
   @doc """
@@ -21,6 +22,7 @@ defmodule PhxLocalizedRoutes.LiveHelpers do
   - `Phoenix.LiveView.on_mount/1`
 
   """
+  @spec on_mount(Config.t(), params :: map, session :: map, Socket.t()) :: {:cont, Socket.t()}
   def on_mount(conf, params, session, socket) do
     Logger.debug("Mount using `on_mount/4` from `#{__MODULE__}`")
     {:cont, Phoenix.LiveView.assign(socket, %{loc: get_assigns(conf, params, session, socket)})}
@@ -35,7 +37,6 @@ defmodule PhxLocalizedRoutes.LiveHelpers do
 
   defp get_assigns(conf, _params, %{"scope_helper" => scope_helper} = _session, _socket) do
     Logger.debug("Using #{scope_helper}'s assigns from config using session key \"scope_helper\"")
-
     conf.get_scope(scope_helper).assign
   end
 end

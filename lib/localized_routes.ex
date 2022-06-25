@@ -1,9 +1,12 @@
 defmodule PhxLocalizedRoutes do
   @moduledoc """
-  Macro to create and validate `PhxLocalizedRoutes` configuration module with
-  convenience callbacks to fetch specific values. It also creates a LiveHelper
-  module to be used in LiveView projects.  For maximum performance, most functions
-  return values including additional data computed at compile time.
+  Macro to create and validate `PhxLocalizedRoutes` configuration modules with
+  convenience callbacks to fetch specific values. For maximum performance, most
+  callbacks return precompiled values with precomputed additional data.
+
+  When used with an app depending on `Phoenix.LiveView` it also creates a LiveHelper module.
+
+  For information how to use this lib see the [Usage Guide](USAGE.md)
   """
 
   alias __MODULE__.Private
@@ -14,24 +17,25 @@ defmodule PhxLocalizedRoutes do
         ]
   @type opts_scopes :: %{binary => opts_scope_map}
   @type opts_scope_map :: %{
-          assign: %{atom => any} | nil,
-          scopes: opts_scopes | nil
+          optional(:assign) => %{atom => any},
+          optional(:scopes) => opts_scopes
         }
 
   # type aliases
+  @type config :: PhxLocalizedRoutes.Config.t()
   @type scopes_nested :: PhxLocalizedRoutes.Scope.Nested.kv_map()
   @type scope_nested :: PhxLocalizedRoutes.Scope.Nested.t()
   @type scopes :: PhxLocalizedRoutes.Scope.Flat.kv_map()
   @type scope :: PhxLocalizedRoutes.Scope.Flat.t()
 
   # define callbacks
-  @doc "Return the scopes in a flat structure"
+  @doc "Returns the scopes in a flat structure"
   @callback scopes :: scopes
 
-  @doc "Return the scopes in a nested structure"
+  @doc "Returns the scopes in a nested structure"
   @callback scopes_nested :: scopes_nested
 
-  @doc "Return the configuration of given scope helper"
+  @doc "Returns the scope of given scope helper"
   @callback get_scope(scope_helper :: nil | String.t()) :: scope
 
   @doc """
@@ -48,7 +52,7 @@ defmodule PhxLocalizedRoutes do
   @callback assigned_values(key_or_keys :: atom | String.t() | list) :: list
 
   @doc "Returns the configuration with precomputed values and flattened scopes"
-  @callback config :: map
+  @callback config :: config
 
   @spec __using__(opts :: Macro.t()) :: Macro.output()
   defmacro __using__(opts) do

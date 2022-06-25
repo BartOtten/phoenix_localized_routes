@@ -4,20 +4,20 @@ defmodule PhxLocalizedRoutes.Scope.Nested do
   """
   @type t :: %__MODULE__{
           assign: %{atom => any} | nil,
-          scopes: %{(binary | atom) => t} | nil,
           scope_path: list(binary),
           scope_prefix: binary,
-          scope_alias: atom
+          scope_alias: atom,
+          scopes: %{(binary | atom) => t} | nil
         }
   @type kv_tuple :: {binary | nil, t}
   @type kv_map :: %{(binary | nil) => t}
 
   defstruct [
     :scope_alias,
-    scopes: %{},
     assign: %{},
     scope_path: [],
-    scope_prefix: ""
+    scope_prefix: "",
+    scopes: %{}
   ]
 end
 
@@ -36,9 +36,9 @@ defmodule PhxLocalizedRoutes.Scope.Flat do
 
   defstruct [
     :scope_alias,
-    scope_prefix: "",
+    assign: %{},
     scope_path: [],
-    assign: %{}
+    scope_prefix: ""
   ]
 end
 
