@@ -42,14 +42,14 @@ defmodule PhxLocalizedRoutes.Config do
   @moduledoc """
   Struct for compiled configuration
   """
-  @type scopes :: %{binary => PhxLocalizedRoutes.Scope.Flat.t()}
+  @type scopes :: %{(binary | nil) => PhxLocalizedRoutes.Scope.Flat.t()}
   @type gettext :: module | nil
   @type t :: %__MODULE__{
           scopes: scopes,
           gettext_module: gettext
         }
 
-  @enforce_keys [:scopes, :gettext_module]
+  @enforce_keys [:scopes]
   defstruct [:scopes, :gettext_module]
 end
 
@@ -80,13 +80,13 @@ defmodule PhxLocalizedRoutes do
 
   # define callbacks
   @doc "Return the scopes in a flat structure"
-  @callback scopes :: map
+  @callback scopes :: scopes
 
   @doc "Return the scopes in a nested structure"
-  @callback scopes_nested :: map
+  @callback scopes_nested :: scopes_nested
 
   @doc "Return the configuration of given scope helper"
-  @callback get_scope(scope_helper :: nil | String.t()) :: map
+  @callback get_scope(scope_helper :: nil | String.t()) :: PhxLocalizedRoutes.Scope.Flat.t()
 
   @doc """
   Return a list of unique values assigned to given key. Returns a list of tuples
@@ -106,39 +106,34 @@ defmodule PhxLocalizedRoutes do
 
   @spec __using__(opts) :: Macro.t()
   defmacro __using__(opts) do
-    Private.print_compile_header(__CALLER__, Private.gettext_in_compilers?(), opts)
-    Private.create_live_helper_module(__CALLER__, __ENV__)
+    Private.print_compile_header(__CALLER__, Private.in_compilers?(:gettext), opts)
+
+    if Private.in_deps?(:phoenix_live_view),
+      do: Private.create_live_helper_module(__CALLER__, __ENV__)
 
     quote location: :keep, bind_quoted: [opts: opts, module: __MODULE__] do
       @behaviour module
 
-      {scopes_nested, scopes_flat, gettext} = Private.get_attr_values(opts)
+      scopes_nested = Private.add_precomputed_values!(opts[:scopes])
+      config_module = Module.safe_concat(module, Config)
+      config = Private.build_config(config_module, [{:scopes_nested, scopes_nested} | opts])
+
+      Private.validate_config!(config)
 
       # set attributes
       @scopes_nested scopes_nested
-      @scopes_flat scopes_flat
-      @gettext gettext
-      @config opts
-              |> Enum.into(%{})
-              |> Map.merge(%{scopes: @scopes_flat, gettext_module: @gettext})
-              |> then(&struct(Module.safe_concat(module, Config), &1))
-
-      Private.validate_config!(@config)
+      @scopes_flat config.scopes
+      @gettext config.gettext_module
+      @config config
 
       # define accessors
       def scopes_nested, do: @scopes_nested
-
       def scopes, do: @scopes_flat
-
       def config, do: @config
 
       # define functions
-      def get_scope(scope_helper) do
-        Map.get(@scopes_flat, scope_helper)
-      end
-
-      def assigned_values(key_or_keys),
-        do: Private.assigned_values(@scopes_flat, key_or_keys)
+      def get_scope(scope_helper), do: Map.get(@scopes_flat, scope_helper)
+      def assigned_values(key_or_keys), do: Private.assigned_values(@scopes_flat, key_or_keys)
     end
   end
 end
@@ -147,34 +142,33 @@ defmodule PhxLocalizedRoutes.Private do
   @moduledoc false
 
   alias PhxLocalizedRoutes, as: PLR
-  alias PhxLocalizedRoutes.Exceptions.AssignsMismatchError
-  alias PhxLocalizedRoutes.Exceptions.MissingLocaleAssignError
-  alias PhxLocalizedRoutes.Exceptions.MissingRootSlugError
-  alias PhxLocalizedRoutes.LiveHelpers
   require Logger
 
-  @spec get_attr_values(PhxLocalizedRoutes.opts()) ::
-          {PLR.scopes_nested(), PLR.scopes(), gettext_module :: module | nil}
-  def get_attr_values(opts) do
-    scopes_nested = add_precomputed_values!(opts[:scopes])
-    scopes_flat = flatten_scopes(scopes_nested)
+  @spec build_config(module, keyword) :: PLR.Config.t()
+  def build_config(module, opts) do
+    scopes_flat = opts |> Keyword.get(:scopes_nested) |> flatten_scopes()
     gettext = Keyword.get(opts, :gettext_module)
 
-    {scopes_nested, scopes_flat, gettext}
+    struct(module, %{scopes: scopes_flat, gettext_module: gettext})
   end
 
   # return a list of unique values assigned to given key. Returns a list
   # of tuples with unique combinations when a list of keys is given.
+  @spec assigned_values(scopes :: PLR.scopes(), atom | binary) :: list(any)
   def assigned_values(scopes, key) when is_atom(key) or is_binary(key),
     do: scopes |> assigned_values([key]) |> Stream.map(&elem(&1, 0)) |> Enum.uniq()
 
+  @spec assigned_values(scopes :: PLR.scopes(), list(atom | binary)) :: list({atom | binary, any})
   def assigned_values(scopes, keys) when is_list(keys) do
     scopes |> aggregate_assigns(keys) |> Enum.uniq()
   end
 
   # takes a nested map of maps and returns a flat map with concatenated keys, aliases and prefixes.
+  @spec flatten_scopes(scopes :: PLR.scopes_nested()) :: PLR.scopes()
   def flatten_scopes(scopes), do: scopes |> do_flatten_scopes() |> List.flatten() |> Map.new()
 
+  @spec do_flatten_scopes(PLR.scopes_nested(), nil | {binary, any} | {nil, nil}) ::
+          list(PLR.scopes())
   def do_flatten_scopes(scopes, parent \\ {nil, nil}) do
     Enum.reduce(scopes, [], fn
       {_, scope_opts} = full_scope, acc ->
@@ -185,6 +179,8 @@ defmodule PhxLocalizedRoutes.Private do
     end)
   end
 
+  @spec flatten_scope({binary, PLR.Scope.Nested.t()}, {binary | nil, PLR.Scope.Flat.t() | nil}) ::
+          {binary, PLR.Scope.Flat.t()}
   def flatten_scope({_scope, scope_opts}, {_p_scope, p_scope_opts})
       when is_nil(p_scope_opts) or is_nil(p_scope_opts.scope_alias) do
     scope_opts = Map.drop(scope_opts, [:scopes])
@@ -212,8 +208,16 @@ defmodule PhxLocalizedRoutes.Private do
     {new_scope_key, struct(PLR.Scope.Flat, Map.from_struct(new_scope_opts))}
   end
 
+  @spec get_slug_key(binary) :: binary
   def get_slug_key(slug), do: slug |> String.replace("/", "_") |> String.replace_prefix("_", "")
 
+  @spec get_scope_meta(slug :: binary, list(binary)) :: %{
+          key: nil | binary,
+          path: list,
+          prefix: binary,
+          alias: nil | atom,
+          helper: nil | binary
+        }
   def get_scope_meta("/", []) do
     %{key: nil, path: [], prefix: "", alias: nil, helper: nil}
   end
@@ -258,6 +262,7 @@ defmodule PhxLocalizedRoutes.Private do
     end
   end
 
+  @spec destruct(map | struct) :: map
   def destruct(map_or_struct) when is_struct(map_or_struct), do: Map.from_struct(map_or_struct)
   def destruct(map_or_struct) when is_map(map_or_struct), do: map_or_struct
 
@@ -271,6 +276,7 @@ defmodule PhxLocalizedRoutes.Private do
   def maybe_compute_nested_scopes(%PLR.Scope.Nested{} = scope_struct, %{} = _scope_map),
     do: scope_struct
 
+  @spec aggregate_assigns(PLR.scopes(), list(binary | atom), list) :: list
   def aggregate_assigns(scopes, keys, acc \\ []) do
     scopes
     |> Enum.reduce(acc, fn
@@ -281,60 +287,59 @@ defmodule PhxLocalizedRoutes.Private do
     |> Enum.uniq()
   end
 
-  defp get_values(assign, keys),
-    do: List.to_tuple(for(key <- keys, do: Map.get(assign, key)))
-
+  @spec validate_config!(PLR.Config.t()) :: :ok
   def validate_config!(opts) do
-    opts
-    |> validate_matching_assign_keys!()
-    |> validate_lang_keys!()
-    |> validate_root_slug!()
+    ^opts =
+      opts
+      |> validate_root_slug!()
+      |> validate_matching_assign_keys!()
+      |> validate_lang_keys!()
 
     :ok
   end
 
-  defp get_first_scope(scopes), do: scopes |> Map.to_list() |> hd() |> elem(1)
-
-  defp get_sorted_assigns_keys(%{assign: assign}) when is_map(assign),
-    do: assign |> Map.keys() |> Enum.sort()
-
-  defp get_sorted_assigns_keys(_scope_opts), do: []
-
   # checks whether the scopes has a top level "/" (root) slug
-  def validate_root_slug!(%{scopes: scopes} = _opts) do
+  @spec validate_root_slug!(PLR.Config.t()) :: PLR.Config.t()
+  def validate_root_slug!(%{scopes: scopes} = opts) do
     unless Enum.any?(scopes, fn {_scope, scope_opts} -> scope_opts.scope_prefix == "/" end),
-      do: raise(MissingRootSlugError)
-  end
-
-  # assign keys should match in order to have uniform availability
-  def validate_matching_assign_keys!(%{scopes: _scopes} = opts) do
-    first_assigns_keys = opts.scopes |> get_first_scope() |> get_sorted_assigns_keys()
-
-    validate_matching_assign_keys!(opts, first_assigns_keys)
+      do: raise(PLR.Exceptions.MissingRootSlugError)
 
     opts
   end
 
-  def validate_matching_assign_keys!(%{scopes: scopes}, keys) do
-    Enum.each(scopes, fn scope ->
-      validate_matching_assign_keys!(scope, keys)
+  # assign keys should match in order to have uniform availability
+  @spec validate_matching_assign_keys!(PLR.Config.t()) :: PLR.Config.t()
+  def validate_matching_assign_keys!(%PLR.Config{scopes: %{nil: reference_scope} = scopes} = opts) do
+    reference_keys = get_sorted_assigns_keys(reference_scope)
+
+    Enum.each(scopes, fn
+      {nil, ^reference_scope} = _reference_scope ->
+        :noop
+
+      scope ->
+        ^scope = validate_matching_assign_keys!(scope, reference_keys)
     end)
+
+    opts
   end
 
-  def validate_matching_assign_keys!({scope, scope_opts}, keys) do
+  @spec validate_matching_assign_keys!({binary, PLR.Scope.Flat.t()}, list(atom | binary)) ::
+          {binary, PLR.Scope.Flat.t()}
+  def validate_matching_assign_keys!({key, scope_opts} = scope, reference_keys) do
     assigns_keys = get_sorted_assigns_keys(scope_opts)
 
-    if Map.get(scope_opts, :scopes), do: validate_matching_assign_keys!(scope_opts, keys)
-
-    if assigns_keys != keys,
+    if assigns_keys != reference_keys,
       do:
-        raise(AssignsMismatchError,
-          scope: scope,
-          expected_keys: keys,
+        raise(PLR.Exceptions.AssignsMismatchError,
+          scope: key,
+          expected_keys: reference_keys,
           actual_keys: assigns_keys
         )
+
+    scope
   end
 
+  @spec validate_lang_keys!(PLR.Config.t()) :: PLR.Config.t()
   # when gettext_module is set, assigns should include the :locale key
   def validate_lang_keys!(opts) when not is_map_key(opts, :gettext_module), do: opts
   def validate_lang_keys!(%{gettext_module: nil} = opts), do: opts
@@ -342,9 +347,10 @@ defmodule PhxLocalizedRoutes.Private do
   def validate_lang_keys!(%{gettext_module: mod, scopes: scopes} = opts) do
     scope = get_first_scope(scopes)
 
-    if is_atom(mod) && is_binary(Map.get(scope.assign, :locale)),
-      do: opts,
-      else: raise(MissingLocaleAssignError)
+    unless is_atom(mod) && is_binary(Map.get(scope.assign, :locale)),
+      do: raise(PLR.Exceptions.MissingLocaleAssignError)
+
+    opts
   end
 
   @spec create_live_helper_module(caller :: Macro.Env.t(), env :: Macro.Env.t()) ::
@@ -358,7 +364,7 @@ defmodule PhxLocalizedRoutes.Private do
     contents =
       quote do
         def on_mount(:default, params, session, socket) do
-          LiveHelpers.on_mount(
+          PLR.LiveHelpers.on_mount(
             unquote(caller.module),
             params,
             session,
@@ -370,22 +376,28 @@ defmodule PhxLocalizedRoutes.Private do
     Module.create(mount_module, contents, Macro.Env.location(env))
   end
 
-  @spec gettext_in_compilers? :: boolean
-  def gettext_in_compilers? do
+  @spec in_compilers?(app :: atom) :: boolean
+  def in_compilers?(app) do
     Mix.Project.get!().project()
     |> Access.get(:compilers)
-    |> Enum.member?(:gettext)
+    |> Enum.member?(app)
+  end
+
+  @spec in_deps?(app :: atom) :: boolean
+  def in_deps?(app) do
+    Mix.Project.get!().project()
+    |> Access.get(:deps)
+    |> Enum.map(&elem(&1, 0))
+    |> Enum.member?(app)
   end
 
   @spec print_compile_header(
           caller :: Macro.Env.t(),
           gettext_in_compilers? :: boolean,
-          opts :: PhxLocalizedRoutes.opts()
-        ) :: no_return
+          opts :: PLR.opts()
+        ) :: :ok
   def print_compile_header(caller, gettext_in_compilers?, config_mod) do
     unless is_nil(config_mod[:gettext_module]) or gettext_in_compilers? do
-      require Logger
-
       router_module =
         caller.module
         |> Module.split()
@@ -396,5 +408,18 @@ defmodule PhxLocalizedRoutes.Private do
         "When route translations are updated, run `mix compile --force #{router_module}`"
       )
     end
+
+    :ok
   end
+
+  @spec get_values(map, list(binary | atom)) :: tuple
+  defp get_values(assign, keys),
+    do: List.to_tuple(for(key <- keys, do: Map.get(assign, key)))
+
+  defp get_first_scope(scopes), do: scopes |> Map.to_list() |> hd() |> elem(1)
+
+  defp get_sorted_assigns_keys(%{assign: assign}) when is_map(assign),
+    do: assign |> Map.keys() |> Enum.sort()
+
+  defp get_sorted_assigns_keys(_scope_opts), do: []
 end
