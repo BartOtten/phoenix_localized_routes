@@ -44,7 +44,7 @@ defmodule PhxLocalizedRoutes.RouterTest do
   )
 
   test "after_routes_callback does not raise" do
-    assert nil == after_routes_callback(%Macro.Env{module: MultiLangRouter}, <<>>)
+    assert nil == P.after_routes_callback(%Macro.Env{module: MultiLangRouter}, <<>>)
     assert Code.ensure_compiled!(MyAppWeb.MultiLangRouter.Helpers.Localized)
   end
 
