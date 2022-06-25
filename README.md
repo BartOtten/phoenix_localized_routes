@@ -23,7 +23,7 @@ user engagement and content relevance.
 - [x]  Can be used for non-locale alternate routing (eg. `/{sport}/{activity}`)
 
 ## Documentation
-Documentation can be found at [HexDocs](https://hexdocs.pm/phoenix_localized_routes/)
+Documentation can be found at [HexDocs](https://hexdocs.pm/phoenix_localized_routes/) (published) and [GitHub Pages](https://bartotten.github.io/phoenix_localized_routes/) (development)
 
 ## Usage Summary
 - Add a few line of code to your `Phoenix` application.
