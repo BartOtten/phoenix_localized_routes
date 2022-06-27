@@ -69,6 +69,7 @@ defmodule PhxLocalizedRoutes.Router do
 
   """
 
+  @spec localize(module, opts :: list, do: Macro.t()) :: Macro.output()
   defmacro localize(conf, opts \\ [], do: context) do
     {conf, _} = Code.eval_quoted(conf)
     Private.do_localize(conf, opts, context)

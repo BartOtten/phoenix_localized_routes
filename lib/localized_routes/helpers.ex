@@ -3,6 +3,7 @@ defmodule PhxLocalizedRoutes.Helpers do
   Helpers to be used in views and controllers.
   """
   alias PhxLocalizedRoutes.Helpers.Private
+  alias PhxLocalizedRoutes.Scope
 
   @doc ~S"""
   Marco used to wrap a Phoenix route and transform it into a localized
@@ -38,7 +39,8 @@ defmodule PhxLocalizedRoutes.Helpers do
   <% end %>
   ```
   """
-  @spec loc_route(orig_route :: Macro.t(), loc_opts :: Macro.t()) :: Macro.output()
+  @spec loc_route(orig_route :: Macro.t(), loc_opts :: Scope.Flat.t() | nil) ::
+          Macro.output()
   defmacro loc_route(orig_route, loc_opts \\ nil) do
     {helper_module, orig_helper_fn, conn_or_socket, args} = Private.fetch_vars(orig_route)
 
@@ -71,6 +73,7 @@ defmodule PhxLocalizedRoutes.Helpers.Private do
   @moduledoc false
 
   alias Phoenix.LiveView.Socket
+  alias PhxLocalizedRoutes.Scope
   alias Plug.Conn
 
   require Logger
@@ -97,7 +100,8 @@ defmodule PhxLocalizedRoutes.Helpers.Private do
     end
   end
 
-  def get_scope_helper(%{assign: %{scope_helper: helper}}), do: helper
+  def get_scope_helper(%Scope.Flat{assign: %{scope_helper: helper}}),
+    do: helper
 
   def get_scope_helper(%Socket{assigns: %{__assigns__: %{loc: %{scope_helper: helper}}}}),
     do: helper
