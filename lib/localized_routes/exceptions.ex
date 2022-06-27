@@ -41,7 +41,6 @@ defmodule PhxLocalizedRoutes.Exceptions do
 
     """
 
-    @impl Exception
     defexception message:
                    "the configuration includes a gettext_module but the assigns are missing the :locale key"
   end
@@ -74,7 +73,6 @@ defmodule PhxLocalizedRoutes.Exceptions do
 
     """
 
-    @impl Exception
     defexception message:
                    "the configured scopes do not start with a root slug. Please wrap your scopes in a root scope with key '/'"
   end

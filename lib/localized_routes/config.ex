@@ -10,7 +10,6 @@ defmodule PhxLocalizedRoutes.Config do
           scopes: %{(binary | nil) => PhxLocalizedRoutes.Scope.Flat.t()},
           gettext_module: module | nil
         }
-  @typep gettext :: module | nil
   @typep scope :: Scope.Flat.t()
   @typep scopes :: %{(binary | nil) => scope}
   @typep scope_tuple :: {binary | nil, scope}
