@@ -2,7 +2,7 @@ defmodule PhxLocalizedRoutes.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/BartOtten/phoenix_localized_routes"
-  @version "0.1.0"
+  @version "0.1.1"
   @name "Phoenix Localized Routes"
 
   def project do
