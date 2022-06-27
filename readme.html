@@ -127,7 +127,7 @@ user engagement and content relevance.</p><pre><code class="makeup elixir" trans
   </a>
   Documentation
 </h2>
-<p>Documentation can be found at <a href="https://hexdocs.pm/phoenix_localized_routes/">HexDocs</a> (published) and <a href="https://bartotten.github.io/phoenix_localized_routes/">GitHub Pages</a> (development). We also provide an <a href="#example-application">example application</a></p><h2 id="requirements-and-installation" class="section-heading">
+<p>Documentation uuis located at <a href="https://hexdocs.pm/phoenix_localized_routes/">HexDocs</a> (published) and <a href="https://bartotten.github.io/phoenix_localized_routes/">GitHub Pages</a> (development). We also provide an <a href="#example-application">example application</a></p><h2 id="requirements-and-installation" class="section-heading">
   <a href="#requirements-and-installation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">requirements-and-installation</p>
   </a>
@@ -145,25 +145,25 @@ user engagement and content relevance.</p><pre><code class="makeup elixir" trans
   </a>
   Routes
 </h3>
-<p>This library provides a localize/1 macro that is designed to wrap all route macros such as get/3, put/3 and resources/3. The routes are replicated for each <code class="inline">scope</code> configured in a <code class="inline">LocalizedRoutes</code> backend module.</p><ul><li>each configured scope may have nested scopes.</li><li>each configured scope may have custom assigns.</li><li>routes may be translated.</li><li>routes are locale independent (no mandatory <code class="inline">website.com/[locale]/</code> format)</li></ul><p>As a result, you have full control over the format, language and assigns of localized URL's.</p><h3 id="route-helpers" class="section-heading">
+<p>This library provides a localize/1 macro designed to wrap all route macros such as get/3, put/3 and resources/3. It replicates routes for each <code class="inline">scope</code> configured in a <code class="inline">LocalizedRoutes</code> backend module.</p><ul><li>each configured scope may have nested scopes.</li><li>each configured scope may have custom assigns.</li><li>routes may be translated.</li><li>routes are locale independent (no mandatory <code class="inline">website.com/[locale]/</code> format)</li></ul><p>As a result, you have full control over the format, language and assigns of localized URL's.</p><h3 id="route-helpers" class="section-heading">
   <a href="#route-helpers" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">route-helpers</p>
   </a>
   Route Helpers
 </h3>
-<p>Locale aware replicas of the standard Phoenix helper functions are created to support auto-localized paths and URLs. Those replicas are placed in a new module named <code class="inline">[MyAppWeb].Router.Helpers.Localized</code>. Additionally, the new module includes helpers for each locale to support linking to a specific locale. </p><p>The new module is a drop-in replacement of the standard Phoenix Helper module, so you can replace the <code class="inline">MyAppWeb.Router.Helpers, as: Routes</code> alias by <code class="inline">MyAppWeb.Router.Helpers.Localized, as: Routes</code> in <code class="inline">myapp_web.ex</code>. </p><p>As a result, all links to localized routes will respect the current scope of a visitor unless you decide otherwise.</p><h3 id="multilingual-routes" class="section-heading">
+<p>Phoenix Localized Routes creates locale aware replicas of the standard Phoenix helper functions to support auto-localized paths and URLs. It places those replicas in a new module named <code class="inline">[MyAppWeb].Router.Helpers.Localized</code> along with helpers for each locale to support linking to a specific locale.</p><p>The new module is a drop-in replacement of the standard Phoenix Helper module, so you can replace the <code class="inline">MyAppWeb.Router.Helpers, as: Routes</code> alias by <code class="inline">MyAppWeb.Router.Helpers.Localized, as: Routes</code> in <code class="inline">myapp_web.ex</code>. </p><p>As a result, all links to localized routes will respect the current scope of a visitor unless you decide otherwise.</p><h3 id="multilingual-routes" class="section-heading">
   <a href="#multilingual-routes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">multilingual-routes</p>
   </a>
   Multilingual Routes
 </h3>
-<p>The original route paths are split and each individual part is extracted to a <code class="inline">routes.po</code> file for translation. During compile-time the translated parts are combined to create translated routes. </p><p>As a result, users can enter URLs using localised terms which can enhance user engagement and content relevance.</p><h3 id="custom-assigns" class="section-heading">
+<p>Phoenix Localized Routes extracts each individual part of a route path to a <code class="inline">routes.po</code> file for translation. During compile-time it combines the translated parts to create translated routes. </p><p>As a result, users can enter URLs using localized terms which can enhance user engagement and content relevance.</p><h3 id="custom-assigns" class="section-heading">
   <a href="#custom-assigns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">custom-assigns</p>
   </a>
   Custom Assigns
 </h3>
-<p>Each scope can specify custom assigns. The customs assigns are made available in templates as <code class="inline">@loc</code> (e.g.<code class="inline">@loc.support_email</code>).</p><p>To set the custom assigns for use in templates, a <code class="inline">Conn.Plug</code> and a helper module with <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback are included. There modules function as bridge between Phoenix Views and Phoenix Live Views.</p><p>As a result, using different assigns per locale is a matter of plug-and-play.</p><h2 id="example-application" class="section-heading">
+<p>Each scope can specify custom assigns. The customs assigns are available in templates as <code class="inline">@loc</code> (e.g.<code class="inline">@loc.support_email</code>).</p><p>In order to set the custom assigns for use in views and templates, this lib includes a <code class="inline">Conn.Plug</code> and a helper module with <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback. There modules function as bridge between Phoenix Views and Phoenix Live Views.</p><p>As a result, using different assigns per locale is a matter of plug-and-play.</p><h2 id="example-application" class="section-heading">
   <a href="#example-application" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">example-application</p>
   </a>
