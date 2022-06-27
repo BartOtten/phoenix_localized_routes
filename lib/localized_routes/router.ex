@@ -66,7 +66,6 @@ defmodule PhxLocalizedRoutes.Router do
   Similarly, localised path and URL helpers are
   generated that wrap the standard Phoenix helpers to
   supporting generating localised path and URLs.
-
   """
 
   @spec localize(module, opts :: list, do: Macro.t()) :: Macro.output()

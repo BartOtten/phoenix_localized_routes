@@ -1,5 +1,12 @@
 # Usage
 
+## Requirements
+
+- Elixir >=1.11
+- Phoenix >= 1.6.0
+- Phoenix LiveView >= 0.16 (optional)
+
+
 ## Installation
 
 You can install this library by adding it to your list of dependencies in `mix.exs`:
@@ -15,6 +22,7 @@ end
 We pressed on making the installation as non-intrusive as possible; yet a few files have to be modified or created.
 
 ## Helpers
+
 `Phoenix Localized Routes` adds localization to the helpers created by Phoenix; no code changes in controllers and (live)views necessary.
 
 ```elixir
@@ -53,6 +61,7 @@ We pressed on making the installation as non-intrusive as possible; yet a few fi
 # Add to browser pipeline
 +   plug(PhxLocalizedRoutes.Plug)
 ```
+
 
 ## Configuration
 
@@ -118,7 +127,9 @@ end
 > You can combine the value set by the route and the value set by a third party library to detect mismatches
 > and guide your visitors accordingly.
 
+
 ## Wrapping routes
+
 Wrap the routes within the scope in an `localized` block, providing your created `LocalizedRoutes` module as argument.
 
 ```elixir
@@ -130,9 +141,11 @@ Wrap the routes within the scope in an `localized` block, providing your created
     end
 ```
 
+
+
 ## Extract translatable segments into `routes.po` files
 
-- Run `mix gettext.merge priv/gettext --locale [lang]}` to create a locales' folder
+- Run `mix gettext.merge priv/gettext --locale {locale}` to create a locales' folder
 - Run `mix gettext.extract --merge` after you updated routes.
 
 Now, we have created new routes PO file in our structure:
