@@ -4,6 +4,8 @@ PhxLocalizedRoutes.Exceptions.AssignsMismatchError.html
 PhxLocalizedRoutes.Exceptions.MissingLocaleAssignError.html
 PhxLocalizedRoutes.Exceptions.MissingRootSlugError.html
 PhxLocalizedRoutes.Exceptions.html
+PhxLocalizedRoutes.Fixtures.Assigns.html
+PhxLocalizedRoutes.Fixtures.html
 PhxLocalizedRoutes.Helpers.html
 PhxLocalizedRoutes.LiveHelpers.html
 PhxLocalizedRoutes.Plug.html
@@ -21,8 +23,8 @@ dist/html/fonts/remixicon.svg
 dist/html/fonts/remixicon.ttf
 dist/html/fonts/remixicon.woff
 dist/html/fonts/remixicon.woff2
-dist/search_items-9f708ae7b6.js
-dist/sidebar_items-48d2b52a43.js
+dist/search_items-3a384f7020.js
+dist/sidebar_items-90d533223c.js
 index.html
 readme.html
 search.html

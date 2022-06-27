@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.28.4">
     <meta name="project" content="Phoenix Localized Routes v0.1.0">
 
-    <title>PhxLocalizedRoutes.LiveHelpers — Phoenix Localized Routes v0.1.0</title>
+    <title>PhxLocalizedRoutes.Fixtures — Phoenix Localized Routes v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
     <script src="dist/sidebar_items-90d533223c.js"></script>
@@ -94,26 +94,16 @@ Phoenix Localized Routes
 </button>
 
 
-    <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/live_helpers.ex#L1" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/test/support/fixtures.ex#L5" title="View Source" class="view-source" rel="help">
       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
 
-  <span translate="no">PhxLocalizedRoutes.LiveHelpers</span> 
+  <span translate="no">PhxLocalizedRoutes.Fixtures</span> 
   <small class="app-vsn" translate="no">(Phoenix Localized Routes v0.1.0)</small>
 
 </h1>
 
-
-  <section id="moduledoc">
-<p>Provides helpers for Phoenix LiveView applications</p><h3 id="module-usage" class="section-heading">
-  <a href="#module-usage" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">usage</p>
-  </a>
-  Usage
-</h3>
-<p>Instructions how to use this module can be found in the <a href="usage.html">Usage Guide</a>.</p>
-  </section>
 
 
   <section id="summary" class="details-list">
@@ -132,12 +122,33 @@ Phoenix Localized Routes
 
       <div class="summary-row">
         <div class="summary-signature">
-          <a href="#on_mount/4" translate="no">on_mount(conf, params, session, socket)</a>
+          <a href="#scopes/0" translate="no">scopes()</a>
 
         </div>
 
-          <div class="summary-synopsis"><p>Assigns custom assigns from the config into the socker under the <code class="inline">:loc</code> key. The
-configuration module is passed as the first argument.</p></div>
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#scopes_flat/0" translate="no">scopes_flat()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#scopes_precomputed/0" translate="no">scopes_precomputed()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#scopes_with_map_assign/0" translate="no">scopes_with_map_assign()</a>
+
+        </div>
 
       </div>
 
@@ -155,16 +166,16 @@ configuration module is passed as the first argument.</p></div>
 Functions
     </h1>
     <div class="functions-list">
-<section class="detail" id="on_mount/4">
+<section class="detail" id="scopes/0">
 
   <div class="detail-header">
-    <a href="#on_mount/4" class="detail-link" title="Link to this function">
+    <a href="#scopes/0" class="detail-link" title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">on_mount(conf, params, session, socket)</h1>
+    <h1 class="signature" translate="no">scopes()</h1>
 
-      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/live_helpers.ex#L26" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/test/support/fixtures.ex#L32" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -174,19 +185,73 @@ Functions
 
   <section class="docstring">
 
-      <div class="specs">
 
-          <pre translate="no"><span class="attribute">@spec</span> on_mount(
-  <a href="PhxLocalizedRoutes.Config.html#t:t/0">PhxLocalizedRoutes.Config.t</a>(),
-  params :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
-  session :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
-  <a href="https://hexdocs.pm/phoenix_live_view/0.17.7/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>()
-) :: {:cont, <a href="https://hexdocs.pm/phoenix_live_view/0.17.7/Phoenix.LiveView.Socket.html#t:t/0">Phoenix.LiveView.Socket.t</a>()}</pre>
+  </section>
+</section>
+<section class="detail" id="scopes_flat/0">
 
-      </div>
+  <div class="detail-header">
+    <a href="#scopes_flat/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_flat()</h1>
 
-<p>Assigns custom assigns from the config into the socker under the <code class="inline">:loc</code> key. The
-configuration module is passed as the first argument.</p><p>The assigns can used as <code class="inline">@loc.my_custom_assign</code></p><p>Used in <code class="inline">PhxLocalizedRoutes.create_helper_module/2</code></p><p>See also:</p><ul><li><a href="https://hexdocs.pm/phoenix_live_view/0.17.7/Phoenix.LiveView.html#on_mount/1"><code class="inline">Phoenix.LiveView.on_mount/1</code></a></li></ul>
+      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/test/support/fixtures.ex#L100" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="scopes_precomputed/0">
+
+  <div class="detail-header">
+    <a href="#scopes_precomputed/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_precomputed()</h1>
+
+      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/test/support/fixtures.ex#L55" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="scopes_with_map_assign/0">
+
+  <div class="detail-header">
+    <a href="#scopes_with_map_assign/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">scopes_with_map_assign()</h1>
+
+      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/test/support/fixtures.ex#L9" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+
   </section>
 </section>
 
@@ -202,7 +267,7 @@ configuration module is passed as the first argument.</p><p>The assigns can used
               <a href="https://hex.pm/packages/phoenix_localized_routes/0.1.0" class="line footer-hex-package">Package</a>
               <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0" class="line">Preview</a>
 
-                <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0/show/lib/localized_routes/live_helpers.ex">(current file)</a>
+                <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0/show/test/support/fixtures.ex">(current file)</a>
 
             </span>
 

@@ -10,7 +10,7 @@
     <title>PhxLocalizedRoutes.Config — Phoenix Localized Routes v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
-    <script src="dist/sidebar_items-48d2b52a43.js"></script>
+    <script src="dist/sidebar_items-90d533223c.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -94,7 +94,7 @@ Phoenix Localized Routes
 </button>
 
 
-    <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/structs.ex#L45" title="View Source" class="view-source" rel="help">
+    <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/config.ex#L1" title="View Source" class="view-source" rel="help">
       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
       <span class="sr-only">View Source</span>
     </a>
@@ -106,7 +106,7 @@ Phoenix Localized Routes
 
 
   <section id="moduledoc">
-<p>Struct for compiled configuration</p>
+<p>Module to create and validate a Config struct</p>
   </section>
 
 
@@ -123,22 +123,6 @@ Phoenix Localized Routes
     <h2>
       <a href="#types">Types</a>
     </h2>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:gettext/0" translate="no">gettext()</a>
-
-        </div>
-
-      </div>
-
-      <div class="summary-row">
-        <div class="summary-signature">
-          <a href="#t:scopes/0" translate="no">scopes()</a>
-
-        </div>
-
-      </div>
 
       <div class="summary-row">
         <div class="summary-signature">
@@ -162,62 +146,6 @@ Phoenix Localized Routes
 Types
     </h1>
     <div class="types-list">
-<section class="detail" id="t:gettext/0">
-
-  <div class="detail-header">
-    <a href="#t:gettext/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">gettext()</h1>
-
-      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/structs.ex#L49" class="view-source" rel="help" title="View Source">
-       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> gettext() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>() | nil</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="t:scopes/0">
-
-  <div class="detail-header">
-    <a href="#t:scopes/0" class="detail-link" title="Link to this type">
-      <i class="ri-link-m" aria-hidden="true"></i>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature" translate="no">scopes()</h1>
-
-      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/structs.ex#L50" class="view-source" rel="help" title="View Source">
-       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <div class="specs">
-
-          <pre translate="no"><span class="attribute">@type</span> scopes() :: <a href="PhxLocalizedRoutes.Scope.Flat.html#t:kv_map/0">PhxLocalizedRoutes.Scope.Flat.kv_map</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
 <section class="detail" id="t:t/0">
 
   <div class="detail-header">
@@ -227,7 +155,7 @@ Types
     </a>
     <h1 class="signature" translate="no">t()</h1>
 
-      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/structs.ex#L51" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/BartOtten/phoenix_localized_routes/blob/v0.1.0/lib/localized_routes/config.ex#L9" class="view-source" rel="help" title="View Source">
        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
        <span class="sr-only">View Source</span>
      </a>
@@ -239,7 +167,10 @@ Types
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">@type</span> t() :: %PhxLocalizedRoutes.Config{gettext_module: <a href="#t:gettext/0">gettext</a>(), scopes: <a href="#t:scopes/0">scopes</a>()}</pre>
+          <pre translate="no"><span class="attribute">@type</span> t() :: %PhxLocalizedRoutes.Config{
+  gettext_module: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>() | nil,
+  scopes: %{required(<a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | nil) =&gt; <a href="PhxLocalizedRoutes.Scope.Flat.html#t:t/0">PhxLocalizedRoutes.Scope.Flat.t</a>()}
+}</pre>
 
       </div>
 
@@ -259,7 +190,7 @@ Types
               <a href="https://hex.pm/packages/phoenix_localized_routes/0.1.0" class="line footer-hex-package">Package</a>
               <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0" class="line">Preview</a>
 
-                <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0/show/lib/localized_routes/structs.ex">(current file)</a>
+                <a href="https://preview.hex.pm/preview/phoenix_localized_routes/0.1.0/show/lib/localized_routes/config.ex">(current file)</a>
 
             </span>
 
