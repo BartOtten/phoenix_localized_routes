@@ -33,7 +33,7 @@ Documentation can be found at [HexDocs](https://hexdocs.pm/phoenix_localized_rou
   - Translate the URL parts like any other translatable text.
 - Run `mix phx.routes` to verify the result.
 
-All links in your application will now automatically use the routes for the set locale.
+All links in your application will now automatically keep the user in the correct scope.
 
 The full guide is written in the [Usage Guide](USAGE.md).
 

@@ -48,7 +48,7 @@ defmodule PhxLocalizedRoutes.RouterTest do
     assert Code.ensure_compiled!(MyAppWeb.MultiLangRouter.Helpers.Localized)
   end
 
-  test "Localize multilang routes" do
+  test "multilang routes are localized and translated" do
     P.do_localize(
       MyAppWeb.MultiLangRoutes,
       [],
@@ -64,7 +64,7 @@ defmodule PhxLocalizedRoutes.RouterTest do
     )
   end
 
-  test "Localize routes" do
+  test "routes are localized" do
     P.do_localize(
       MyAppWeb.LocalizedRoutes,
       [],
@@ -80,7 +80,7 @@ defmodule PhxLocalizedRoutes.RouterTest do
     )
   end
 
-  test "Localize single route (non block)" do
+  test "single route (non block) is localized" do
     P.do_localize(
       MyAppWeb.LocalizedRoutes,
       [],
