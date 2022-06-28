@@ -1,11 +1,14 @@
 defmodule PhxLocalizedRoutes.HelpersTest do
   use ExUnit.Case, async: true
+
   alias MyAppWeb.MultiLangRouter.Helpers, as: OriginalRoutes
   alias MyAppWeb.MultiLangRouter.Helpers.Localized, as: Routes
   alias Phoenix.LiveView.Socket
   alias Plug.Conn
   alias PhxLocalizedRoutes.Helpers.Private, as: P
+
   require PhxLocalizedRoutes.Helpers
+  require Logger
 
   @original "/products/11/edit"
   @localized "/europe/nl/producten/11/bewerken"
@@ -84,6 +87,8 @@ defmodule PhxLocalizedRoutes.HelpersTest do
   end
 
   test "log_error/1 prints the given error" do
+    Logger.flush()
+
     assert ExUnit.CaptureLog.capture_log(fn ->
              P.log_error("my error")
            end) =~ "my error"

@@ -4,10 +4,14 @@ defmodule PhxLocalizedRoutesTest do
   alias PhxLocalizedRoutes.Fixtures, as: F
   alias PhxLocalizedRoutes.Private, as: P
 
+  require Logger
+
   @scopes_flat F.scopes_flat()
 
   describe "pre-compile function print_compile_header/3" do
     test "does not print a warning when no Gettext module is set" do
+      Logger.flush()
+
       assert ExUnit.CaptureLog.capture_log(fn ->
                P.print_compile_header(TestRouter, false, %{
                  scopes: @scopes_flat
@@ -16,6 +20,8 @@ defmodule PhxLocalizedRoutesTest do
     end
 
     test "does not print a warning when auto compilation detected" do
+      Logger.flush()
+
       assert ExUnit.CaptureLog.capture_log(fn ->
                P.print_compile_header(TestRouter, true, %{
                  gettext_module: MyAppWeb.Gettext,
@@ -25,6 +31,8 @@ defmodule PhxLocalizedRoutesTest do
     end
 
     test "prints a warning when a Gettext module is set and no auto compilation is detected" do
+      Logger.flush()
+
       assert ExUnit.CaptureLog.capture_log(fn ->
                P.print_compile_header(TestRouter, false, %{
                  gettext_module: MyAppWeb.Gettext,
