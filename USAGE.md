@@ -19,11 +19,13 @@ def deps do
 end
 ```
 
-We pressed on making the installation as non-intrusive as possible; yet a few files have to be modified or created.
+We pressed on making the installation as non-intrusive as possible. The following
+modules / files need changes.
 
 ## Helpers
 
-`Phoenix Localized Routes` adds localization to the helpers created by Phoenix; no code changes in controllers and (live)views necessary.
+`Phoenix Localized Routes` adds localization to the helpers created by Phoenix;
+no code changes in controllers and (live)views necessary.
 
 ```elixir
 # file: lib/example_web/example_web.ex
@@ -65,24 +67,30 @@ We pressed on making the installation as non-intrusive as possible; yet a few fi
 
 ## Configuration
 
-Create the module `[MyAppWeb].LocalizedRoutes` in the directory of your web application. The example shows a nested configuration using the default `[MyAppWeb].Gettext` module for multilingual URL's.
+Create the module `[MyAppWeb].LocalizedRoutes` in the directory of your web
+application. The example shows a nested configuration using the default
+`[MyAppWeb].Gettext` module for multilingual URLs.
 
 It is possible to set:
 
-  * `:scopes` - scopes as map of maps, the keys are used as URL segments (slugs).
+  * `:scopes` - scopes as map of maps, keys are used as URL segments (slugs).
   * `:gettext_module` - `Gettext` module to extract URL segments and translate them.
 
 For each local scope you can set.
 
-  * `:assign` - a `Map` or `Struct` of values to assign to the `Plug.Conn` and/or `Phoenix.Socket`. When using a `Map` nested scopes inherit assigns from their parent.
+  * `:assign` - a `Map` or `Struct` of values to assign to the `Plug.Conn`
+  and/or `Phoenix.Socket`. When using a `Map` nested scopes inherit assigns from
+  their parent.
   * `:scopes` - nested scopes
-    
-Assigns are namespaced with `:loc`. They can be accessed in templates as `@loc.{key_name}` (e.g. `@loc.contact`)
+
+Assigns are namespaced with `:loc`. Templates can access them with
+`@loc.{key_name}` (e.g. `@loc.contact`)
 
 > #### Note {: .info}
-> 
+>
 > - using a `Struct` for `:assign`'s improves the developer experience.
-> - when using a `Struct` for assigns it should not be nested in the configuration module; but it can be in the same file as shown in the example.
+> - when using a `Struct` for assigns it should not be nested in the
+>   configuration module; but it can be in the same file as shown in the example.
 > - when a `Gettext` module is provided, the assigns must include a value for `:locale`.
 >
 > During compilation the configuration is validated.
@@ -90,8 +98,9 @@ Assigns are namespaced with `:loc`. They can be accessed in templates as `@loc.{
 
 ```elixir
 # file /lib/example_web/localized_routes.ex
-# This example uses a `Struct` for assign, so there is no assign inheritance only struct defaults. When
-# using maps, nested scopes will inherit key/values from their parent.
+# This example uses a `Struct` for assign, so there is no assign inheritance;
+# only struct defaults. When using maps, nested scopes will inherit key/values
+# from their parent.
 
 defmodule ExampleWeb.LocalizedRoutes.Assigns do
   @moduledoc false
@@ -122,15 +131,18 @@ end
 
 > #### Note {: .info}
 >
-> Your visitors may prefer another locale than the one set for the route they landed on. Libraries 
-> like [Cldr.Plug.SetLocale](https://hexdocs.pm/ex_cldr/Cldr.Plug.SetLocale.html) can detect their preferences.
-> You can combine the value set by the route and the value set by a third party library to detect mismatches
-> and guide your visitors accordingly.
+> Your visitors may prefer another locale than the one set for the route they
+> landed on. Libraries like
+> [Cldr.Plug.SetLocale](https://hexdocs.pm/ex_cldr/Cldr.Plug.SetLocale.html) can
+> detect their preferences. You can combine the value set by the route and the
+> value set by a third party library to detect mismatches and guide your visitors
+> accordingly.
 
 
 ## Wrapping routes
 
-Wrap the routes within the scope in an `localized` block, providing your created `LocalizedRoutes` module as argument.
+Wrap the routes within the scope in an `localized` block, providing your created
+`LocalizedRoutes` module as argument.
 
 ```elixir
 # file: router.ex
@@ -165,9 +177,12 @@ Now, we have created new routes PO file in our structure:
     └─ errors.pot
     └─ routes.pot <---- new!
 
-You can translate the route segments in the `.po`-file and recompile the Router module to generate the new multilingual routes.
+You can translate the route segments in the `.po`-file and recompile the Router
+module to generate the new multilingual routes.
 
-Finally, Phoenix Localized Routes is able to recompile routes whenever PO files change. To enable this feature, the :gettext compiler needs to be added to the list of Mix compilers.
+Finally, Phoenix Localized Routes is able to recompile routes whenever PO files
+change. To enable this feature, the :gettext compiler needs to be added to the
+list of Mix compilers.
 
 In mix.exs:
 

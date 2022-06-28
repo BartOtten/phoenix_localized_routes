@@ -92,7 +92,7 @@ defmodule PhxLocalizedRoutes.MixProject do
   end
 
   defp description() do
-    "Localize your Phoenix website with multilingual URL's and custom template assigns; enhancing user engagement and content relevance."
+    "Localize your Phoenix website with multilingual URLs and custom template assigns; enhancing user engagement and content relevance."
   end
 
   defp docs do
