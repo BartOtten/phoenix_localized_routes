@@ -114,11 +114,11 @@ Phoenix Localized Routes
   </a>
   Installation
 </h2>
-<p>You can install this library by adding it to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="1748994704-1">do</span><span class="w">
-  </span><span class="p" data-group-id="1748994704-2">[</span><span class="w">
-    </span><span class="p" data-group-id="1748994704-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="1748994704-3">}</span><span class="w">
-  </span><span class="p" data-group-id="1748994704-2">]</span><span class="w">
-</span><span class="k" data-group-id="1748994704-1">end</span></code></pre><p>We pressed on making the installation as non-intrusive as possible. The following
+<p>You can install this library by adding it to your list of dependencies in <code class="inline">mix.exs</code>:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="9084234676-1">do</span><span class="w">
+  </span><span class="p" data-group-id="9084234676-2">[</span><span class="w">
+    </span><span class="p" data-group-id="9084234676-3">{</span><span class="ss">:phoenix_localized_routes</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&gt; 0.1.0&quot;</span><span class="p" data-group-id="9084234676-3">}</span><span class="w">
+  </span><span class="p" data-group-id="9084234676-2">]</span><span class="w">
+</span><span class="k" data-group-id="9084234676-1">end</span></code></pre><p>We pressed on making the installation as non-intrusive as possible. The following
 modules / files need changes.</p><h2 id="helpers" class="section-heading">
   <a href="#helpers" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">helpers</p>
@@ -130,10 +130,10 @@ no code changes in controllers and (live)views necessary.</p><pre><code class="m
 
 </span><span class="c1"># in controller</span><span class="w">
 </span><span class="o">-</span><span class="w">  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">ExampleWeb.Router.Helpers</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Routes</span><span class="w">
-</span><span class="o">+</span><span class="w">  </span><span class="k">unquote</span><span class="p" data-group-id="9307595202-1">(</span><span class="n">loc_helpers</span><span class="p" data-group-id="9307595202-2">(</span><span class="p" data-group-id="9307595202-2">)</span><span class="p" data-group-id="9307595202-1">)</span><span class="w">
+</span><span class="o">+</span><span class="w">  </span><span class="k">unquote</span><span class="p" data-group-id="2748652551-1">(</span><span class="n">loc_helpers</span><span class="p" data-group-id="2748652551-2">(</span><span class="p" data-group-id="2748652551-2">)</span><span class="p" data-group-id="2748652551-1">)</span><span class="w">
 
 </span><span class="c1"># in live_view</span><span class="w">
-</span><span class="o">+</span><span class="w">  </span><span class="n">on_mount</span><span class="p" data-group-id="9307595202-3">(</span><span class="nc">ExampleWeb.LocalizedRoutes.LiveHelpers</span><span class="p" data-group-id="9307595202-3">)</span><span class="w">
+</span><span class="o">+</span><span class="w">  </span><span class="n">on_mount</span><span class="p" data-group-id="2748652551-3">(</span><span class="nc">ExampleWeb.LocalizedRoutes.LiveHelpers</span><span class="p" data-group-id="2748652551-3">)</span><span class="w">
 
 </span><span class="c1"># in router</span><span class="w">
 </span><span class="o">+</span><span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nc">PhxLocalizedRoutes.Router</span><span class="w">
@@ -141,20 +141,20 @@ no code changes in controllers and (live)views necessary.</p><pre><code class="m
 
 </span><span class="c1"># in view_helpers</span><span class="w">
 </span><span class="o">-</span><span class="w">  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">ExampleWeb.Router.Helpers</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Routes</span><span class="w">
-</span><span class="o">+</span><span class="w">  </span><span class="k">unquote</span><span class="p" data-group-id="9307595202-4">(</span><span class="n">loc_helpers</span><span class="p" data-group-id="9307595202-5">(</span><span class="p" data-group-id="9307595202-5">)</span><span class="p" data-group-id="9307595202-4">)</span><span class="w">
+</span><span class="o">+</span><span class="w">  </span><span class="k">unquote</span><span class="p" data-group-id="2748652551-4">(</span><span class="n">loc_helpers</span><span class="p" data-group-id="2748652551-5">(</span><span class="p" data-group-id="2748652551-5">)</span><span class="p" data-group-id="2748652551-4">)</span><span class="w">
 
 </span><span class="c1"># insert new private function</span><span class="w">
-</span><span class="o">+</span><span class="w">  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">loc_helpers</span><span class="w"> </span><span class="k" data-group-id="9307595202-6">do</span><span class="w">
-</span><span class="o">+</span><span class="w">    </span><span class="k">quote</span><span class="w"> </span><span class="k" data-group-id="9307595202-7">do</span><span class="w">
+</span><span class="o">+</span><span class="w">  </span><span class="kd">defp</span><span class="w"> </span><span class="nf">loc_helpers</span><span class="w"> </span><span class="k" data-group-id="2748652551-6">do</span><span class="w">
+</span><span class="o">+</span><span class="w">    </span><span class="k">quote</span><span class="w"> </span><span class="k" data-group-id="2748652551-7">do</span><span class="w">
 </span><span class="o">+</span><span class="w">      </span><span class="kn">import</span><span class="w"> </span><span class="nc">PhxLocalizedRoutes.Helpers</span><span class="w">
 </span><span class="o">+</span><span class="w">      </span><span class="kn">alias</span><span class="w"> </span><span class="nc">ExampleWeb.Router.Helpers</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">OriginalRoutes</span><span class="w">
 </span><span class="o">+</span><span class="w">      </span><span class="kn">alias</span><span class="w"> </span><span class="nc">ExampleWeb.Router.Helpers.Localized</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Routes</span><span class="w">
 </span><span class="o">+</span><span class="w">      </span><span class="kn">alias</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Loc</span><span class="w">
-</span><span class="o">+</span><span class="w">    </span><span class="k" data-group-id="9307595202-7">end</span><span class="w">
-</span><span class="o">+</span><span class="w">  </span><span class="k" data-group-id="9307595202-6">end</span></code></pre><pre><code class="makeup elixir" translate="no"><span class="c1"># file: lib/example_web/router.ex</span><span class="w">
+</span><span class="o">+</span><span class="w">    </span><span class="k" data-group-id="2748652551-7">end</span><span class="w">
+</span><span class="o">+</span><span class="w">  </span><span class="k" data-group-id="2748652551-6">end</span></code></pre><pre><code class="makeup elixir" translate="no"><span class="c1"># file: lib/example_web/router.ex</span><span class="w">
 
 </span><span class="c1"># Add to browser pipeline</span><span class="w">
-</span><span class="o">+</span><span class="w">   </span><span class="n">plug</span><span class="p" data-group-id="3379341180-1">(</span><span class="nc">PhxLocalizedRoutes.Plug</span><span class="p" data-group-id="3379341180-1">)</span></code></pre><h2 id="configuration" class="section-heading">
+</span><span class="o">+</span><span class="w">   </span><span class="n">plug</span><span class="p" data-group-id="4465356610-1">(</span><span class="nc">PhxLocalizedRoutes.Plug</span><span class="p" data-group-id="4465356610-1">)</span></code></pre><h2 id="configuration" class="section-heading">
   <a href="#configuration" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">configuration</p>
   </a>
@@ -171,31 +171,31 @@ configuration module; but it can be in the same file as shown in the example.</l
 </span><span class="c1"># only struct defaults. When using maps, nested scopes will inherit key/values</span><span class="w">
 </span><span class="c1"># from their parent.</span><span class="w">
 
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes.Assigns</span><span class="w"> </span><span class="k" data-group-id="2473123742-1">do</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes.Assigns</span><span class="w"> </span><span class="k" data-group-id="8166176216-1">do</span><span class="w">
   </span><span class="na">@moduledoc</span><span class="w"> </span><span class="no">false</span><span class="w">
-  </span><span class="kd">defstruct</span><span class="w"> </span><span class="p" data-group-id="2473123742-2">[</span><span class="ss">:contact</span><span class="p">,</span><span class="w"> </span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;en&quot;</span><span class="p" data-group-id="2473123742-2">]</span><span class="w">
-</span><span class="k" data-group-id="2473123742-1">end</span><span class="w">
+  </span><span class="kd">defstruct</span><span class="w"> </span><span class="p" data-group-id="8166176216-2">[</span><span class="ss">:contact</span><span class="p">,</span><span class="w"> </span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;en&quot;</span><span class="p" data-group-id="8166176216-2">]</span><span class="w">
+</span><span class="k" data-group-id="8166176216-1">end</span><span class="w">
 
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="w"> </span><span class="k" data-group-id="2473123742-3">do</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="w"> </span><span class="k" data-group-id="8166176216-3">do</span><span class="w">
   </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Exampleeb.LocalizedRoutes.Assigns</span><span class="w">
 
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">PhxLocalizedRoutes</span><span class="p">,</span><span class="w">
     </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p">%</span><span class="err">{</span><span class="w">
       </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">%</span><span class="err">{</span><span class="w">
-        </span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-4">%</span><span class="nc" data-group-id="2473123742-4">Assigns</span><span class="p" data-group-id="2473123742-4">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;root@example.com&quot;</span><span class="p" data-group-id="2473123742-4">}</span><span class="p">,</span><span class="w">
-        </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-5">%{</span><span class="w">
-          </span><span class="s">&quot;/europe&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2473123742-6">%{</span><span class="w">
-            </span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-7">%</span><span class="nc" data-group-id="2473123742-7">Assigns</span><span class="p" data-group-id="2473123742-7">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;europe@example.com&quot;</span><span class="p" data-group-id="2473123742-7">}</span><span class="p">,</span><span class="w">
-            </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-8">%{</span><span class="w">
-              </span><span class="s">&quot;/nl&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2473123742-9">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-10">%</span><span class="nc" data-group-id="2473123742-10">Assigns</span><span class="p" data-group-id="2473123742-10">{</span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;verkoop@example.nl&quot;</span><span class="p" data-group-id="2473123742-10">}</span><span class="p" data-group-id="2473123742-9">}</span><span class="p">,</span><span class="w">
-              </span><span class="s">&quot;/be&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2473123742-11">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-12">%</span><span class="nc" data-group-id="2473123742-12">Assigns</span><span class="p" data-group-id="2473123742-12">{</span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;handel@example.be&quot;</span><span class="p" data-group-id="2473123742-12">}</span><span class="p" data-group-id="2473123742-11">}</span><span class="w">
-            </span><span class="p" data-group-id="2473123742-8">}</span><span class="w">
-          </span><span class="p" data-group-id="2473123742-6">}</span><span class="p">,</span><span class="w">
-        </span><span class="s">&quot;/gb&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2473123742-13">%{</span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2473123742-14">%</span><span class="nc" data-group-id="2473123742-14">Assigns</span><span class="p" data-group-id="2473123742-14">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sales@example.com&quot;</span><span class="p" data-group-id="2473123742-14">}</span><span class="w">
-      </span><span class="p" data-group-id="2473123742-13">}</span><span class="w">
-    </span><span class="p" data-group-id="2473123742-5">}</span><span class="p">,</span><span class="w">
+        </span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-4">%</span><span class="nc" data-group-id="8166176216-4">Assigns</span><span class="p" data-group-id="8166176216-4">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;root@example.com&quot;</span><span class="p" data-group-id="8166176216-4">}</span><span class="p">,</span><span class="w">
+        </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-5">%{</span><span class="w">
+          </span><span class="s">&quot;/europe&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8166176216-6">%{</span><span class="w">
+            </span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-7">%</span><span class="nc" data-group-id="8166176216-7">Assigns</span><span class="p" data-group-id="8166176216-7">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;europe@example.com&quot;</span><span class="p" data-group-id="8166176216-7">}</span><span class="p">,</span><span class="w">
+            </span><span class="ss">scopes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-8">%{</span><span class="w">
+              </span><span class="s">&quot;/nl&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8166176216-9">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-10">%</span><span class="nc" data-group-id="8166176216-10">Assigns</span><span class="p" data-group-id="8166176216-10">{</span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;verkoop@example.nl&quot;</span><span class="p" data-group-id="8166176216-10">}</span><span class="p" data-group-id="8166176216-9">}</span><span class="p">,</span><span class="w">
+              </span><span class="s">&quot;/be&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8166176216-11">%{</span><span class="ss">assigns</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-12">%</span><span class="nc" data-group-id="8166176216-12">Assigns</span><span class="p" data-group-id="8166176216-12">{</span><span class="ss">locale</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nl&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;handel@example.be&quot;</span><span class="p" data-group-id="8166176216-12">}</span><span class="p" data-group-id="8166176216-11">}</span><span class="w">
+            </span><span class="p" data-group-id="8166176216-8">}</span><span class="w">
+          </span><span class="p" data-group-id="8166176216-6">}</span><span class="p">,</span><span class="w">
+        </span><span class="s">&quot;/gb&quot;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8166176216-13">%{</span><span class="ss">assign</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8166176216-14">%</span><span class="nc" data-group-id="8166176216-14">Assigns</span><span class="p" data-group-id="8166176216-14">{</span><span class="ss">contact</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sales@example.com&quot;</span><span class="p" data-group-id="8166176216-14">}</span><span class="w">
+      </span><span class="p" data-group-id="8166176216-13">}</span><span class="w">
+    </span><span class="p" data-group-id="8166176216-5">}</span><span class="p">,</span><span class="w">
     </span><span class="ss">gettext_module</span><span class="p">:</span><span class="w"> </span><span class="nc">ExampleWeb.Gettext</span><span class="w">
-</span><span class="k" data-group-id="2473123742-3">end</span></code></pre><blockquote><h4 class="info">Note</h4><p>Your visitors may prefer another locale than the one set for the route they
+</span><span class="k" data-group-id="8166176216-3">end</span></code></pre><blockquote><h4 class="info">Note</h4><p>Your visitors may prefer another locale than the one set for the route they
 landed on. Libraries like
 <a href="https://hexdocs.pm/ex_cldr/Cldr.Plug.SetLocale.html">Cldr.Plug.SetLocale</a> can
 detect their preferences. You can combine the value set by the route and the
@@ -208,11 +208,11 @@ accordingly.</p></blockquote><h2 id="wrapping-routes" class="section-heading">
 </h2>
 <p>Wrap the routes within the scope in an <code class="inline">localized</code> block, providing your created
 <code class="inline">LocalizedRoutes</code> module as argument.</p><pre><code class="makeup elixir" translate="no"><span class="c1"># file: router.ex</span><span class="w">
-    </span><span class="n">scope</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">ExampleWeb</span><span class="w"> </span><span class="k" data-group-id="5971866656-1">do</span><span class="w">
-</span><span class="o">+</span><span class="w">     </span><span class="n">localize</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="w"> </span><span class="k" data-group-id="5971866656-2">do</span><span class="w">
-        </span><span class="p" data-group-id="5971866656-3">[</span><span class="n">...</span><span class="n">routes</span><span class="p" data-group-id="5971866656-3">]</span><span class="w">
-</span><span class="o">+</span><span class="w">     </span><span class="k" data-group-id="5971866656-2">end</span><span class="w">
-    </span><span class="k" data-group-id="5971866656-1">end</span></code></pre><h2 id="extract-translatable-segments-into-routes-po-files" class="section-heading">
+    </span><span class="n">scope</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">ExampleWeb</span><span class="w"> </span><span class="k" data-group-id="7968525469-1">do</span><span class="w">
+</span><span class="o">+</span><span class="w">     </span><span class="n">localize</span><span class="w"> </span><span class="nc">ExampleWeb.LocalizedRoutes</span><span class="w"> </span><span class="k" data-group-id="7968525469-2">do</span><span class="w">
+        </span><span class="p" data-group-id="7968525469-3">[</span><span class="n">...</span><span class="n">routes</span><span class="p" data-group-id="7968525469-3">]</span><span class="w">
+</span><span class="o">+</span><span class="w">     </span><span class="k" data-group-id="7968525469-2">end</span><span class="w">
+    </span><span class="k" data-group-id="7968525469-1">end</span></code></pre><h2 id="extract-translatable-segments-into-routes-po-files" class="section-heading">
   <a href="#extract-translatable-segments-into-routes-po-files" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">extract-translatable-segments-into-routes-po-files</p>
   </a>
@@ -234,11 +234,11 @@ accordingly.</p></blockquote><h2 id="wrapping-routes" class="section-heading">
 </span><span class="err">└</span><span class="err">─</span><span class="w"> </span><span class="n">routes</span><span class="o">.</span><span class="n">pot</span><span class="w"> </span><span class="o">&lt;-</span><span class="o">--</span><span class="o">-</span><span class="w"> </span><span class="n">new!</span></code></pre><p>You can translate the route segments in the <code class="inline">.po</code>-file and recompile the Router
 module to generate the new multilingual routes.</p><p>Finally, Phoenix Localized Routes is able to recompile routes whenever PO files
 change. To enable this feature, the :gettext compiler needs to be added to the
-list of Mix compilers.</p><p>In mix.exs:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">project</span><span class="w"> </span><span class="k" data-group-id="0630209063-1">do</span><span class="w">
-  </span><span class="p" data-group-id="0630209063-2">[</span><span class="w">
-    </span><span class="ss">compilers</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0630209063-3">[</span><span class="ss">:gettext</span><span class="p" data-group-id="0630209063-3">]</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nc">Mix</span><span class="o">.</span><span class="n">compilers</span><span class="p">,</span><span class="w">
-  </span><span class="p" data-group-id="0630209063-2">]</span><span class="w">
-</span><span class="k" data-group-id="0630209063-1">end</span></code></pre>
+list of Mix compilers.</p><p>In mix.exs:</p><pre><code class="makeup elixir" translate="no"><span class="kd">def</span><span class="w"> </span><span class="nf">project</span><span class="w"> </span><span class="k" data-group-id="1366644745-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1366644745-2">[</span><span class="w">
+    </span><span class="ss">compilers</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1366644745-3">[</span><span class="ss">:gettext</span><span class="p" data-group-id="1366644745-3">]</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nc">Mix</span><span class="o">.</span><span class="n">compilers</span><span class="p">,</span><span class="w">
+  </span><span class="p" data-group-id="1366644745-2">]</span><span class="w">
+</span><span class="k" data-group-id="1366644745-1">end</span></code></pre>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 
