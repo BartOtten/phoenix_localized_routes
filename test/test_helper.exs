@@ -1,7 +1,6 @@
 # config Logger to only display >= warn as capture_log doesn't seem to work
 Logger.configure(level: :warn)
 ExUnit.start(capture_log: true)
-Application.put_env(:phoenix, :json_library, Jason)
 
 defmodule RouterTestHelpers do
   @moduledoc false

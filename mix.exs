@@ -37,6 +37,8 @@ defmodule PhxLocalizedRoutes.MixProject do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
+    if Mix.env() == :test, do: Application.put_env(:phoenix, :json_library, Jason)
+
     [
       extra_applications: [:logger]
     ]
