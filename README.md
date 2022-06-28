@@ -18,7 +18,7 @@ enhancing user engagement and content relevance.
 ## Top Features and Benefits
 
 - URL format is [customizable](#routes) (no mandatory _website.com/[locale]/page_)
-- URL can [matches language of content](#multilingual-routes); enhancing user
+- URLs can [match the language of content](#multilingual-routes); enhancing user
   engagement and content relevance.
 - [Less than 10 lines](USAGE.md#helpers) of code to change in existing applications.
 - Includes [helper functions](#route-helpers) to generate links to other locales.
