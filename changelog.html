@@ -10,7 +10,7 @@
     <title>Changelog — Phoenix Localized Routes v0.1.1</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
-    <script src="dist/sidebar_items-62f1d6a736.js"></script>
+    <script src="dist/sidebar_items-48721d3747.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,14 +114,19 @@ Phoenix Localized Routes
   </a>
   1. Enhancements
 </h3>
-<pre><code class="makeup elixir" translate="no"><span class="o">*</span><span class="w"> </span><span class="nc">Added</span><span class="w"> </span><span class="n">typespecs</span><span class="w">
-</span><span class="o">*</span><span class="w"> </span><span class="nc">Modules</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">better</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">experience</span></code></pre><h3 id="2-bugfixes" class="section-heading">
+<ul><li>Added typespecs</li><li>Modules split for better test experience</li></ul><h3 id="2-bugfixes" class="section-heading">
   <a href="#2-bugfixes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">2-bugfixes</p>
   </a>
-  2. Bugfixes
+  2.Bugfixes
 </h3>
-<pre><code class="makeup elixir" translate="no"><span class="o">*</span><span class="w"> </span><span class="err">`</span><span class="nc">Helpers</span><span class="o">.</span><span class="n">loc_route</span><span class="err">`</span><span class="w"> </span><span class="n">requires</span><span class="w"> </span><span class="ss">:loc_opts</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="err">`</span><span class="nc">Scope.Flat</span><span class="o">.</span><span class="n">t</span><span class="p" data-group-id="0867631310-1">(</span><span class="p" data-group-id="0867631310-1">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="no">nil</span><span class="err">`</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freeform</span><span class="w"> </span><span class="err">`</span><span class="n">map</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="no">nil</span><span class="err">`</span></code></pre><h2 id="0-1-0" class="section-heading">
+<ul><li>Fix errors reported by Dialyzer</li></ul><h3 id="3-breaking-changes" class="section-heading">
+  <a href="#3-breaking-changes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">3-breaking-changes</p>
+  </a>
+  3. Breaking Changes
+</h3>
+<ul><li><p><code class="inline">Helpers.loc_route</code> requires :loc_opts of type <code class="inline">Scope.Flat.t() | nil</code></p></li></ul><h2 id="0-1-0" class="section-heading">
   <a href="#0-1-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">0-1-0</p>
   </a>

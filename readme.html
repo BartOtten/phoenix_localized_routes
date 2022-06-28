@@ -10,7 +10,7 @@
     <title>README — Phoenix Localized Routes v0.1.1</title>
     <link rel="stylesheet" href="dist/elixir-b6f1ed5df9b1d42a7309.css" />
 
-    <script src="dist/sidebar_items-62f1d6a736.js"></script>
+    <script src="dist/sidebar_items-48721d3747.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -106,32 +106,35 @@ Phoenix Localized Routes
 <a href="https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml"><img src="https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml/badge.svg?event=push" alt="Build Status"/></a>
 <a href="https://github.com/BartOtten/phoenix_localized_routes/commits/main"><img src="https://img.shields.io/github/last-commit/BartOtten/phoenix_localized_routes.svg" alt="Last Updated"/></a>
 <a href="https://hex.pm/packages/phoenix_localized_routes"><img src="https://img.shields.io/hexpm/v/phoenix_localized_routes" alt="Hex.pm"/></a>
-<img src="https://img.shields.io/hexpm/l/phoenix_localized_routes" alt="Hex.pm"/></p><h1>Phoenix Localized Routes</h1><p>Localize your Phoenix website with multilingual URL's and custom template assigns; enhancing 
-user engagement and content relevance.</p><pre><code class="makeup elixir" translate="no"><span class="w">                    </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">                 </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;en_US&quot;</span><span class="w">
-</span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">  </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">nederland</span><span class="o">/</span><span class="n">producten</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">bewerken</span><span class="w">  </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nl_NL&quot;</span><span class="w">
-                    </span><span class="p">=&gt;</span><span class="w">  </span><span class="o">/</span><span class="n">espana</span><span class="o">/</span><span class="n">producto</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">editar</span><span class="w">        </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;es_ES&quot;</span></code></pre><h2 id="features-and-benefits" class="section-heading">
-  <a href="#features-and-benefits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
-  <p class="sr-only">features-and-benefits</p>
+<img src="https://img.shields.io/hexpm/l/phoenix_localized_routes" alt="Hex.pm"/></p><h1>Phoenix Localized Routes</h1><p>Localize your Phoenix website with multilingual URLs and custom template assigns;
+enhancing user engagement and content relevance.</p><pre><code class="makeup elixir" translate="no"><span class="w">                    </span><span class="err">⇒</span><span class="w"> </span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">                  </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;en_US&quot;</span><span class="w">
+</span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="w">  </span><span class="err">⇒</span><span class="w"> </span><span class="o">/</span><span class="n">nederland</span><span class="o">/</span><span class="n">producten</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">bewerken</span><span class="w">   </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;nl_NL&quot;</span><span class="w">
+                    </span><span class="err">⇒</span><span class="w"> </span><span class="o">/</span><span class="n">espana</span><span class="o">/</span><span class="n">producto</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">editar</span><span class="w">         </span><span class="na">@loc</span><span class="o">.</span><span class="n">locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;es_ES&quot;</span></code></pre><h2 id="top-features-and-benefits" class="section-heading">
+  <a href="#top-features-and-benefits" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">top-features-and-benefits</p>
   </a>
-  Features and Benefits
+  Top Features and Benefits
 </h2>
-<ul><li>[x]  URL format is <a href="#routes">locale independent</a> (no mandatory <code class="inline">website.com/[locale]/page</code>)</li><li>[x]  URL <a href="#multilingual-routes">matches language of content</a>; enhancing user engagement and content relevance.</li><li>[x]  <a href="usage.html#helpers">Less than 10 lines</a> of code to be changed in existing code Phoenix applications.</li><li>[x]  Includes <a href="#route-helpers">helper functions</a> to generate links to other locales.</li><li>[x]  Supports <a href="#custom-assigns">custom assigns</a> per scope/locale.</li><li>[x]  Routes and helpers generated at compile time; no performance penalty!</li></ul><p>Simple when possible, powerful where needed.</p><h2 id="usage-summary" class="section-heading">
+<ul><li>URL format is <a href="#routes">customizable</a> (no mandatory <em>website.com/[locale]/page</em>)</li><li>URL can <a href="#multilingual-routes">matches language of content</a>; enhancing user
+engagement and content relevance.</li><li><a href="usage.html#helpers">Less than 10 lines</a> of code to change in existing applications.</li><li>Includes <a href="#route-helpers">helper functions</a> to generate links to other locales.</li><li>Supports <a href="#custom-assigns">custom assigns</a> per scope/locale.</li><li>No run-time performance penalty!</li></ul><p>Simple when possible, powerful where needed.</p><h2 id="usage-summary" class="section-heading">
   <a href="#usage-summary" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">usage-summary</p>
   </a>
   Usage Summary
 </h2>
-<ul><li>Add a configuration file describing which alternate routes to generate.</li><li>Replace <strong>less than 10 lines</strong> of code in your existing <a href="https://hexdocs.pm/phoenix/1.6.6/Phoenix.html"><code class="inline">Phoenix</code></a> application.</li><li>Optionally:<ul><li>Run <code class="inline">mix gettext.extract --merge</code>.</li><li>Translate the URL parts like any other translatable text.</li></ul></li><li>Run <a href="https://hexdocs.pm/phoenix/1.6.6/Mix.Tasks.Phx.Routes.html"><code class="inline">mix phx.routes</code></a> to verify the result.</li></ul><p>All links in your application will now automatically keep the user in the correct scope.</p><h2 id="documentation" class="section-heading">
+<ul><li>Add a configuration file describing which alternate routes to generate.</li><li>Replace <strong>less than 10 lines</strong> of code in your existing <a href="https://hexdocs.pm/phoenix/1.6.6/Phoenix.html"><code class="inline">Phoenix</code></a> application.</li><li>Optionally:<ul><li>Run <a href="https://hexdocs.pm/gettext/0.19.1/Mix.Tasks.Gettext.Extract.html"><code class="inline">mix gettext.extract --merge</code></a>.</li><li>Translate the URL parts like any other translatable text.</li></ul></li><li>Run <a href="https://hexdocs.pm/phoenix/1.6.6/Mix.Tasks.Phx.Routes.html"><code class="inline">mix phx.routes</code></a> to verify the result.</li></ul><p>You can now visit the localized URLs. Links and redirects in your application will
+automatically keep the visitors in their current (localized) scope.</p><h2 id="documentation" class="section-heading">
   <a href="#documentation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">documentation</p>
   </a>
   Documentation
 </h2>
-<p>Documentation uuis located at <a href="https://hexdocs.pm/phoenix_localized_routes/">HexDocs</a> (published) and <a href="https://bartotten.github.io/phoenix_localized_routes/">GitHub Pages</a> (development). We also provide an <a href="#example-application">example application</a></p><h2 id="requirements-and-installation" class="section-heading">
+<p><a href="https://hexdocs.pm/phoenix_localized_routes/">HexDocs</a> (stable)
+and <a href="https://bartotten.github.io/phoenix_localized_routes/">GitHub Pages</a> (development).</p><p>We also provide an <a href="#example-application">example application</a> you can experiment with.</p><h2 id="requirements-and-installation" class="section-heading">
   <a href="#requirements-and-installation" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">requirements-and-installation</p>
   </a>
-  Requirements and  Installation
+  Requirements and Installation
 </h2>
 <p>See the <a href="usage.html">Usage Guide</a> for the requirements and installation instructions.</p><h2 id="working" class="section-heading">
   <a href="#working" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
@@ -139,40 +142,55 @@ user engagement and content relevance.</p><pre><code class="makeup elixir" trans
   </a>
   Working
 </h2>
-<p>This chapter aims at providing a high over view of the main features of Phoenix Localized Routes.</p><h3 id="routes" class="section-heading">
+<p>A high-level overview of Phoenix Localized Routes' main features.</p><h3 id="routes" class="section-heading">
   <a href="#routes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">routes</p>
   </a>
   Routes
 </h3>
-<p>This library provides a localize/1 macro designed to wrap all route macros such as get/3, put/3 and resources/3. It replicates routes for each <code class="inline">scope</code> configured in a <code class="inline">LocalizedRoutes</code> backend module.</p><ul><li>each configured scope may have nested scopes.</li><li>each configured scope may have custom assigns.</li><li>routes may be translated.</li><li>routes are locale independent (no mandatory <code class="inline">website.com/[locale]/</code> format)</li></ul><p>As a result, you have full control over the format, language and assigns of localized URL's.</p><h3 id="route-helpers" class="section-heading">
+<p>This library provides a localize/1 macro designed to wrap all route macros such as
+get/3, put/3 and resources/3. It replicates routes for each <code class="inline">scope</code> configured in
+a <code class="inline">LocalizedRoutes</code> backend module.</p><ul><li>each configured scope may have nested scopes.</li><li>each configured scope may have custom assigns.</li><li>routes may be translated.</li><li>routes are locale independent (no mandatory <code class="inline">website.com/[locale]/</code> format)</li></ul><p>As a result, you have full control over the format, language and assigns of localized URLs.</p><h3 id="route-helpers" class="section-heading">
   <a href="#route-helpers" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">route-helpers</p>
   </a>
   Route Helpers
 </h3>
-<p>Phoenix Localized Routes creates locale aware replicas of the standard Phoenix helper functions to support auto-localized paths and URLs. It places those replicas in a new module named <code class="inline">[MyAppWeb].Router.Helpers.Localized</code> along with helpers for each locale to support linking to a specific locale.</p><p>The new module is a drop-in replacement of the standard Phoenix Helper module, so you can replace the <code class="inline">MyAppWeb.Router.Helpers, as: Routes</code> alias by <code class="inline">MyAppWeb.Router.Helpers.Localized, as: Routes</code> in <code class="inline">myapp_web.ex</code>. </p><p>As a result, all links to localized routes will respect the current scope of a visitor unless you decide otherwise.</p><h3 id="multilingual-routes" class="section-heading">
+<p>Phoenix Localized Routes creates locale aware replicas of the standard Phoenix helper
+functions to support auto-localized paths and URLs. It places those replicas in a new
+module named <code class="inline">[MyAppWeb].Router.Helpers.Localized</code> along with helpers for each locale
+to support linking to a specific locale.</p><p>The new module is a drop-in replacement of the standard Phoenix Helper module.
+Simply replace the <code class="inline">MyAppWeb.Router.Helpers, as: Routes</code> alias by
+<code class="inline">MyAppWeb.Router.Helpers.Localized, as: Routes</code> in <code class="inline">myapp_web.ex</code>.</p><p>As a result, all links to localized routes will respect the current scope of a visitor
+unless you decide otherwise.</p><h3 id="multilingual-routes" class="section-heading">
   <a href="#multilingual-routes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">multilingual-routes</p>
   </a>
   Multilingual Routes
 </h3>
-<p>Phoenix Localized Routes extracts each individual part of a route path to a <code class="inline">routes.po</code> file for translation. During compile-time it combines the translated parts to create translated routes. </p><p>As a result, users can enter URLs using localized terms which can enhance user engagement and content relevance.</p><h3 id="custom-assigns" class="section-heading">
+<p>Phoenix Localized Routes extracts individual parts of a routes' path to a <code class="inline">routes.po</code> file
+for translation. At compile-time it combines the translated parts to create new routes.</p><p>As a result, users can enter URLs using localized terms which can enhance user engagement
+and content relevance.</p><h3 id="custom-assigns" class="section-heading">
   <a href="#custom-assigns" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">custom-assigns</p>
   </a>
   Custom Assigns
 </h3>
-<p>Each scope can specify custom assigns. The customs assigns are available in templates as <code class="inline">@loc</code> (e.g.<code class="inline">@loc.support_email</code>).</p><p>In order to set the custom assigns for use in views and templates, this lib includes a <code class="inline">Conn.Plug</code> and a helper module with <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback. There modules function as bridge between Phoenix Views and Phoenix Live Views.</p><p>As a result, using different assigns per locale is a matter of plug-and-play.</p><h2 id="example-application" class="section-heading">
+<p>Each scope can specify custom assigns. The customs assigns are available in templates
+as <code class="inline">@loc</code> (e.g.<code class="inline">@loc.support_email</code>).</p><p>In order to set the custom assigns for use in views and templates, this lib includes
+a <code class="inline">Conn.Plug</code> module and a LiveView helper module with
+<a href="https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#on_mount/1">on_mount</a> callback.
+The modules create a bridge to share assigns between Phoenix Views and Phoenix Live Views.</p><p>As a result, using different assigns per locale is a matter of plug-and-play.</p><h2 id="example-application" class="section-heading">
   <a href="#example-application" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
   <p class="sr-only">example-application</p>
   </a>
   Example Application
 </h2>
-<p>An example Phoenix application showing translated routes and custom assigns is available at GitHub.</p><pre><code class="makeup bash" translate="no"><span class="">  git clone https://github.com/BartOtten/phoenix_localized_routes_example.git
+<p>An example Phoenix app using translated routes and custom assigns is available at GitHub.</p><pre><code class="makeup bash" translate="no"><span class="">  git clone https://github.com/BartOtten/phoenix_localized_routes_example.git
 </span><span class="">  cd phoenix_localized_routes_example
 </span><span class="">  iex -S mix phx.server
-</span></code></pre><p>Once the application is running, have a look at the <a href="http://localhost:4000/europe/nl/producten/">example page</a>.</p>
+</span></code></pre><p>Once the application is running, have a look at the
+<a href="http://localhost:4000/europe/nl/producten/">example page</a>.</p>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 
