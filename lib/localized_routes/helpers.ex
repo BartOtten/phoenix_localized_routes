@@ -118,6 +118,19 @@ defmodule PhxLocalizedRoutes.Helpers.Private do
     nil
   end
 
+  # Elixir >= 1.14
+  def fetch_vars(
+        {_ma1, _me1,
+         [
+           _ma2,
+           {{_marker, _meta, [helper_module, orig_helper_fn]}, _meta2,
+            [conn_or_socket | _rest] = args}
+         ]}
+      ) do
+    {helper_module, orig_helper_fn, conn_or_socket, args}
+  end
+
+  # Elixir <= 1.13
   def fetch_vars(
         {{_marker, _meta, [helper_module, orig_helper_fn]}, _meta2,
          [conn_or_socket | _rest] = args}

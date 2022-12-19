@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+### 1.Bugfixes
+* Support Elixir >= 1.14
+
 ## 0.1.1
 
 ### 1. Enhancements
