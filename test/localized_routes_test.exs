@@ -1,5 +1,5 @@
 defmodule PhxLocalizedRoutesTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias PhxLocalizedRoutes.Fixtures, as: F
   alias PhxLocalizedRoutes.Private, as: P
@@ -7,6 +7,10 @@ defmodule PhxLocalizedRoutesTest do
   require Logger
 
   @scopes_flat F.scopes_flat()
+
+  setup do
+    Logger.flush()
+  end
 
   describe "pre-compile function print_compile_header/3" do
     test "does not print a warning when no Gettext module is set" do
