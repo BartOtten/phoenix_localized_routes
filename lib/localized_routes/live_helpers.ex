@@ -10,6 +10,22 @@ defmodule PhxLocalizedRoutes.LiveHelpers do
   alias PhxLocalizedRoutes.Config
   require Logger
 
+  defmacrop assign_code(conf, params, session, socket) do
+    {:ok, phx_version} = :application.get_key(:phoenix, :vsn)
+
+    if Version.match?(to_string(phx_version), "< 1.7.0-dev") do
+      quote bind_quoted: [conf: conf, params: params, session: session, socket: socket] do
+        {:cont,
+         Phoenix.LiveView.assign(socket, %{loc: get_assigns(conf, params, session, socket)})}
+      end
+    else
+      quote bind_quoted: [conf: conf, params: params, session: session, socket: socket] do
+        {:cont,
+         Phoenix.Component.assign(socket, %{loc: get_assigns(conf, params, session, socket)})}
+      end
+    end
+  end
+
   @doc """
   Assigns custom assigns from the config into the socker under the `:loc` key. The
   configuration module is passed as the first argument.
@@ -25,7 +41,7 @@ defmodule PhxLocalizedRoutes.LiveHelpers do
   @spec on_mount(Config.t(), params :: map, session :: map, Socket.t()) :: {:cont, Socket.t()}
   def on_mount(conf, params, session, socket) do
     Logger.debug("Mount using `on_mount/4` from `#{__MODULE__}`")
-    {:cont, Phoenix.LiveView.assign(socket, %{loc: get_assigns(conf, params, session, socket)})}
+    assign_code(conf, params, session, socket)
   end
 
   defp get_assigns(_conf, _params, _session, %Socket{
