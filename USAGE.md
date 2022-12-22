@@ -28,7 +28,7 @@ modules / files need changes.
 no code changes in controllers and (live)views necessary.
 
 ```elixir
-# file: lib/example_web/example_web.ex
+# file: lib/example_web.ex
 
 # in controller
 -  alias ExampleWeb.Router.Helpers, as: Routes

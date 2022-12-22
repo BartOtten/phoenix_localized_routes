@@ -17,7 +17,7 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header(TestRouter, false, %{
+               P.print_compile_header("1.13.2", TestRouter, false, %{
                  scopes: @scopes_flat
                })
              end) == ""
@@ -27,7 +27,7 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header(TestRouter, true, %{
+               P.print_compile_header("1.13.2", TestRouter, true, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
@@ -38,12 +38,23 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header(TestRouter, false, %{
+               P.print_compile_header("1.13.2", TestRouter, false, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
              end) =~
                "When route translations are updated, run `mix compile --force TestRouter.Router`"
+    end
+
+    test "does not print a warning when Elixir >= 1.14 is used" do
+      Logger.flush()
+
+      assert ExUnit.CaptureLog.capture_log(fn ->
+               P.print_compile_header("1.14.2", TestRouter, false, %{
+                 gettext_module: MyAppWeb.Gettext,
+                 scopes: @scopes_flat
+               })
+             end) =~ ""
     end
   end
 end
