@@ -69,7 +69,7 @@ defmodule PhxLocalizedRoutes.Private do
 
   @spec compile_actions(opts, caller, env) :: Macro.output()
   def compile_actions(opts, caller, env) do
-    print_compile_header(caller.module, in_compilers?(:gettext), opts)
+    print_compile_header(System.version(), caller.module, in_compilers?(:gettext), opts)
 
     if in_deps?(:phoenix_live_view),
       do: create_live_helper_module(caller.module, env)
@@ -147,7 +147,7 @@ defmodule PhxLocalizedRoutes.Private do
   @spec in_compilers?(app :: atom) :: boolean
   def in_compilers?(app) do
     Mix.Project.get!().project()
-    |> Access.get(:compilers)
+    |> Access.get(:compilers, [])
     |> Enum.member?(app)
   end
 
@@ -160,12 +160,15 @@ defmodule PhxLocalizedRoutes.Private do
   end
 
   @spec print_compile_header(
+          sys_version :: String.t(),
           caller_module :: module,
           gettext_in_compilers? :: boolean,
           opts :: opts
         ) :: :ok
-  def print_compile_header(caller_module, gettext_in_compilers?, config_mod) do
-    unless is_nil(config_mod[:gettext_module]) or gettext_in_compilers? do
+  def print_compile_header(sys_version, caller_module, gettext_in_compilers?, config_mod) do
+    unless Version.match?(sys_version, ">= 1.14.0") or
+             is_nil(config_mod[:gettext_module]) or
+             gettext_in_compilers? do
       router_module =
         caller_module
         |> Module.split()
