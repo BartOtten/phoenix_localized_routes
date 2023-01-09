@@ -1,4 +1,6 @@
 # Changelog
+## 0.1.3-rc.0
+* Support Phoenix Verified Routes
 
 ## 0.1.2
 ### 1.Bugfixes

@@ -60,7 +60,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
         live("/", HomeLive, :index)
         live("/products/:id/edit", ProductLive.Index, :edit)
         live("/wildcard/*", WildcardController)
-      end
+      end,
+      __ENV__
     )
   end
 
@@ -76,7 +77,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
         live("/", HomeLive, :index)
         live("/products/:id/edit", ProductLive.Index, :edit)
         live("/wildcard/*", WildcardController)
-      end
+      end,
+      __ENV__
     )
   end
 
@@ -84,7 +86,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
     P.do_localize(
       MyAppWeb.LocalizedRoutes,
       [],
-      quote(do: get("/users/register", UserController, :new))
+      quote(do: get("/users/register", UserController, :new)),
+      __ENV__
     )
   end
 

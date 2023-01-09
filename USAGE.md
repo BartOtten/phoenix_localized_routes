@@ -11,10 +11,11 @@
 
 You can install this library by adding it to your list of dependencies in `mix.exs`:
 
-```elixir
+```diff
 def deps do
   [
-    {:phoenix_localized_routes, "~> 0.1.0"}
+     ...other deps
++    {:phoenix_localized_routes, "~> 0.1.0"}
   ]
 end
 ```
@@ -27,40 +28,50 @@ modules / files need changes.
 `Phoenix Localized Routes` adds localization to the helpers created by Phoenix;
 no code changes in controllers and (live)views necessary.
 
-```elixir
+```diff
 # file: lib/example_web.ex
 
+# in router
++  use PhxLocalizedRoutes.Router
+
 # in controller
--  alias ExampleWeb.Router.Helpers, as: Routes
+   unquote(verified_routes())
 +  unquote(loc_helpers())
 
 # in live_view
-+  on_mount(ExampleWeb.LocalizedRoutes.LiveHelpers)
+      unquote(html_helpers())
++     on_mount(ExampleWeb.LocalizedRoutes.LiveHelpers)
 
-# in router
-+  import PhxLocalizedRoutes.Router
-+  use PhxLocalizedRoutes.Router
 
 # in view_helpers
--  alias ExampleWeb.Router.Helpers, as: Routes
+   unquote(verified_routes())
 +  unquote(loc_helpers())
 
 # insert new private function
 +  defp loc_helpers do
 +    quote do
 +      import PhxLocalizedRoutes.Helpers
-+      alias ExampleWeb.Router.Helpers, as: OriginalRoutes
-+      alias ExampleWeb.Router.Helpers.Localized, as: Routes
++      import ExampleWeb.Router.VerifiedRoutes
++
 +      alias ExampleWeb.LocalizedRoutes, as: Loc
++
++      # Uncomment when using the Phoenix Route Helpers
++      # alias ExampleWeb.Router.Helpers, as: OriginalRoutes
++      # alias ExampleWeb.Router.Helpers.Localized, as: Routes
++
++      # Uncomment when overriding the default Verified Route sigil
++      import Phoenix.VerifiedRoutes, except: [sigil_p: 2]
 +    end
 +  end
 ```
 
 
-```elixir
+```diff
 # file: lib/example_web/router.ex
 
 # Add to browser pipeline
+  pipeline :browser do
+    [...other plugs]
 +   plug(PhxLocalizedRoutes.Plug)
 ```
 
@@ -144,7 +155,7 @@ end
 Wrap the routes within the scope in an `localized` block, providing your created
 `LocalizedRoutes` module as argument.
 
-```elixir
+```diff
 # file: router.ex
     scope "/", ExampleWeb do
 +     localize ExampleWeb.LocalizedRoutes do
@@ -181,7 +192,7 @@ You can translate the route segments in the `.po`-file and recompile the Router
 module to generate the new multilingual routes.
 
 Finally, Phoenix Localized Routes is able to recompile routes whenever PO files
-change. To enable this feature, the :gettext compiler needs to be added to the
+change. To enable this feature **in Elixir < 1.14**, the :gettext compiler needs to be added to the
 list of Mix compilers.
 
 In mix.exs:

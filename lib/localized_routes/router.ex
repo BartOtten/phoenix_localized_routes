@@ -34,7 +34,11 @@ defmodule PhxLocalizedRoutes.Router do
 
   defmacro __using__(_options) do
     quote location: :keep do
-      @after_compile {PhxLocalizedRoutes.Router.Private, :after_routes_callback}
+      if Module.get_attribute(__ENV__.module, :phoenix_helpers, true) do
+        @after_compile {PhxLocalizedRoutes.Router.Private, :after_routes_callback}
+      end
+
+      import PhxLocalizedRoutes.Router
     end
   end
 
@@ -71,7 +75,7 @@ defmodule PhxLocalizedRoutes.Router do
   @spec localize(module, opts :: list, do: Macro.t()) :: Macro.output()
   defmacro localize(conf, opts \\ [], do: context) do
     {conf, _} = Code.eval_quoted(conf)
-    Private.do_localize(conf, opts, context)
+    Private.do_localize(conf, opts, context, __CALLER__)
   end
 end
 
@@ -111,11 +115,20 @@ defmodule PhxLocalizedRoutes.Router.Private do
       )
 
     Module.create(loc_helper_mod, [prelude] ++ functions, Macro.Env.location(env))
+
     nil
   end
 
-  def do_localize(conf, opts, context) do
+  def do_localize(conf, opts, context, env) do
     opts = opts |> Enum.into(%{}) |> Map.merge(conf.config())
+
+    # Create sigil in new module
+    mod = Module.concat(env.module, :VerifiedRoutes)
+
+    unless function_exported?(mod, :__info__, 1) do
+      sigil = create_sigil(opts.scopes, context, opts)
+      Module.create(mod, sigil, Macro.Env.location(env))
+    end
 
     [maybe_gettext_triggers(context, opts) | create_phx_scopes(opts.scopes, context, opts)]
   end
@@ -157,6 +170,121 @@ defmodule PhxLocalizedRoutes.Router.Private do
   def include_dgettext_call(part, opts) do
     quote do
       unquote(opts.gettext_module).dgettext(unquote(@domain), unquote(part))
+    end
+  end
+
+  def create_sigil(scopes, {marker, meta, _children} = route, opts)
+      when marker != :__block__ do
+    create_sigil(scopes, {:__block__, meta, [route]}, opts)
+  end
+
+  def create_sigil(
+        scopes,
+        _context,
+        %{sigil: sigil, sigil_original: sigil_original, gettext_module: gettext_backend} = _opts
+      ) do
+    delegated_original =
+      if sigil == "p" do
+        if is_nil(sigil_original),
+          do:
+            raise(
+              ArgumentError,
+              "When overriding the default Phoenix Verified Routes sigil  ~p, the `sigil_original` is required in the configuration. See: https://hexdocs.pm/phoenix_localized_routes/usage.html"
+            )
+
+        sigil_name = String.to_atom("sigil_" <> sigil_original)
+
+        quote do
+          defmacro unquote(sigil_name)(route, extra) do
+            quote do
+              Phoenix.VerifiedRoutes.sigil_p(unquote(route), unquote(extra))
+            end
+          end
+        end
+      end
+
+    sigil_name = String.to_atom("sigil_" <> sigil)
+
+    localized =
+      quote do
+        defmacro unquote(sigil_name)({:<<>>, meta, segments} = route, extra) do
+          case_patterns = unquote(generate_case_patterns(scopes, gettext_backend))
+
+          var =
+            Enum.filter(
+              __CALLER__.versioned_vars,
+              fn
+                {{var, _}, _} when var in [:socket, :conn, :assigns] ->
+                  true
+
+                other ->
+                  false
+              end
+            )
+            |> Enum.map(fn {{var, _}, _} -> var end)
+
+          cond do
+            :socket in var ->
+              quote do
+                case var!(socket).assigns.loc.scope_helper do
+                  unquote(case_patterns)
+                end
+              end
+
+            :conn in var ->
+              quote do
+                case var!(conn).private.phx_loc_routes.assign.scope_helper do
+                  unquote(case_patterns)
+                end
+              end
+
+            :assigns in var ->
+              quote do
+                case get_in(var!(assigns), [:loc, :scope_helper]) do
+                  unquote(case_patterns)
+                end
+              end
+
+            true ->
+              quote do
+                Phoenix.VerifiedRoutes.sigil_p(unquote(route), unquote(extra))
+              end
+          end
+        end
+      end
+
+    [delegated_original, localized]
+  end
+
+  def generate_case_patterns(scopes, gettext_backend) do
+    quote bind_quoted: [
+            scopes: Macro.escape(scopes),
+            gettext_backend: Macro.escape(gettext_backend)
+          ] do
+      for {scope, scope_opts} <- scopes do
+        {:<<>>, meta, segments} = route
+
+        segments =
+          if is_nil(gettext_backend) or is_nil(scope),
+            do: segments,
+            else: [
+              scope_opts.scope_prefix
+              | PhxLocalizedRoutes.Router.Private.translate_segments(
+                  segments,
+                  gettext_backend,
+                  scope_opts.assign.locale
+                )
+            ]
+
+        pattern = scope_opts.assign.scope_helper
+        route_ast = {:<<>>, meta, segments}
+
+        quote do
+          unquote(pattern) ->
+            Phoenix.VerifiedRoutes.sigil_p(unquote(route_ast), unquote(extra))
+        end
+      end
+      |> List.flatten()
     end
   end
 
@@ -206,13 +334,31 @@ defmodule PhxLocalizedRoutes.Router.Private do
   end
 
   # Gettext requires we set the current process locale
-  # in order to translate. This might ordinarily disrupt
-  # any user set locale. However since this is only executed
+  # in order to translate. Since this is only executed
   # at compile time it does not affect runtime behaviour.
+
+  # TODO: Rewrite translation functions to be less specific in input/output
 
   def translate_paths(routes, gettext_backend, locale) do
     Gettext.put_locale(gettext_backend, locale)
     translate_paths_macro(routes, gettext_backend)
+  end
+
+  def translate_segments(segments, gettext_backend, locale) do
+    Gettext.put_locale(gettext_backend, locale)
+
+    segments
+    |> Enum.map(fn
+      segment when is_binary(segment) ->
+        path = URI.parse(segment).path
+
+        path
+        |> String.split(@path_seperator)
+        |> Enum.map_join(@path_seperator, &translate_part(gettext_backend, &1))
+
+      other ->
+        other
+    end)
   end
 
   def translate_path({type, meta, [path | rest]}, gettext_backend) when is_binary(path) do
@@ -226,7 +372,11 @@ defmodule PhxLocalizedRoutes.Router.Private do
 
   def translate_part(_backend, part) when part in ["", "*"], do: part
   def translate_part(_backend, @interpolate <> _rest = part), do: part
-  def translate_part(gettext_backend, part), do: Gettext.dgettext(gettext_backend, @domain, part)
+
+  def translate_part(gettext_backend, part) when is_binary(part),
+    do: Gettext.dgettext(gettext_backend, @domain, part)
+
+  def translate_part(_backend, part), do: part
 
   def shortest_helper(helpers) do
     helpers

@@ -70,7 +70,8 @@ defmodule PhxLocalizedRoutes.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
       {:floki, ">= 0.30.0", only: :test},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:makeup_diff, "~> 0.1.0", only: [:dev]}
     ]
   end
 
