@@ -43,8 +43,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
     do: get("/paginas/nieuw", MyAppWeb.PageController, :new)
   )
 
-  test "after_routes_callback does not raise" do
-    assert nil == P.after_routes_callback(%Macro.Env{module: MultiLangRouter}, <<>>)
+  test "build_localized_helpers_module does not raise" do
+    assert nil == P.build_localized_helpers_module(%Macro.Env{module: MultiLangRouter}, <<>>)
     assert Code.ensure_compiled!(MyAppWeb.MultiLangRouter.Helpers.Localized)
   end
 

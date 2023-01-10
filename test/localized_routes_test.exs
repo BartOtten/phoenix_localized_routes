@@ -148,7 +148,8 @@ defmodule PhxLocalizedRoutesCompilationTest do
     assert LocRoutesConfig.config() == %Config{
              gettext_module: MyAppWeb.Gettext,
              scopes: @scopes_flat,
-             sigil: "l"
+             sigil_localized: "~l",
+             sigil_original: "~o"
            }
   end
 end
