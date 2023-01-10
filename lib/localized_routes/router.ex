@@ -34,9 +34,8 @@ defmodule PhxLocalizedRoutes.Router do
 
   defmacro __using__(_options) do
     quote location: :keep do
-      if Module.get_attribute(__ENV__.module, :phoenix_helpers, true) do
-        @after_compile {PhxLocalizedRoutes.Router.Private, :after_routes_callback}
-      end
+      if Module.get_attribute(__ENV__.module, :phoenix_helpers, true),
+        do: @after_compile({PhxLocalizedRoutes.Router.Private, :build_localized_helpers_module})
 
       import PhxLocalizedRoutes.Router
     end
@@ -89,7 +88,7 @@ defmodule PhxLocalizedRoutes.Router.Private do
 
   alias PhxLocalizedRoutes.Config
 
-  def after_routes_callback(env, _bytecode) do
+  def build_localized_helpers_module(env, _bytecode) do
     original_helper_mod = Module.safe_concat(env.module, :Helpers)
     loc_helper_mod = Module.concat(original_helper_mod, :Localized)
 
@@ -122,16 +121,20 @@ defmodule PhxLocalizedRoutes.Router.Private do
     nil
   end
 
+  def build_verified_routes_module(opts, context, env) do
+    mod = Module.concat(env.module, :VerifiedRoutes)
+    sigil_ast = create_sigil(opts.scopes, context, opts)
+
+    Code.put_compiler_option(:ignore_module_conflict, true)
+    Module.create(mod, sigil_ast, Macro.Env.location(env))
+    Code.put_compiler_option(:ignore_module_conflict, false)
+  end
+
   def do_localize(conf, opts, context, env) do
     opts = opts |> Enum.into(%{}) |> Map.merge(conf.config())
 
-    # Create sigil in new module
-    mod = Module.concat(env.module, :VerifiedRoutes)
-
-    unless function_exported?(mod, :__info__, 1) do
-      sigil = create_sigil(opts.scopes, context, opts)
-      Module.create(mod, sigil, Macro.Env.location(env))
-    end
+    if function_exported?(Phoenix.VerifiedRoutes, :__info__, 1),
+      do: build_verified_routes_module(opts, context, env)
 
     [maybe_gettext_triggers(context, opts) | create_phx_scopes(opts.scopes, context, opts)]
   end
