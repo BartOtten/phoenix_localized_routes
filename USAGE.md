@@ -85,7 +85,9 @@ application. The example shows a nested configuration using the default
 It is possible to set:
 
   * `:scopes` - scopes as map of maps, keys are used as URL segments (slugs).
-  * `:gettext_module` - `Gettext` module to extract URL segments and translate them.
+  * `:gettext_module` - `Gettext` module used to extract and translate URL segments.
+  * `:sigil_localized` - Sigil used for Localized Verified Routes. (default: "~l")
+  * `:sigil_original` - Sigil used for the original Verified Routes when `:sigil_localized` is set to "~p" (default: "~o")
 
 For each local scope you can set.
 
@@ -204,3 +206,47 @@ def project do
   ]
 end
 ```
+
+## Using Phoenix Verified Routes
+Phoenix 1.7 includes a new Phoenix.VerifiedRoutes feature which
+provides ~p for route generation with compile-time verification.
+
+Phoenix Localized Routes has support for *localized* Verified Routes using
+sigil ~l. The sigil used can be customized by setting the `sigil_localized`
+option in the configuration.
+
+### Overriding sigil ~p
+The default sigil ~p used by Phoenix.VerifiedRoutes can be
+overridden by setting `sigil_localized: "~p"`. When doing so, the original
+sigil is by default renamed to ~o. This can be customized by setting
+the `sigil_original` option.
+
+**Example**
+```elixir
+    sigil_localized: "~p",
+    sigil_original: "~q"
+```
+
+To prevent import conflicts the original `sigil_p/2` function of `Phoenix.VerifiedRoutes`
+should be excluded from import. This is done by adding an exception in `loc_helpers/0`.
+
+```diff
+# file: lib/example_web.ex
+  defp loc_helpers do
+    quote do
+       [...]
++      # Uncomment when overriding the default Verified Route sigil
++      import Phoenix.VerifiedRoutes, except: [sigil_p: 2]
+  end
+```
+
+As you normally don't want different static files per local scope, adjust
+their references.
+```diff
+    # file components/layouts/root.html.heex
+-   <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+-   <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
++   <link phx-track-static rel="stylesheet" href={~o"/assets/app.css"} />
++   <script defer phx-track-static type="text/javascript" src={~o"/assets/app.js"}>
+```
+

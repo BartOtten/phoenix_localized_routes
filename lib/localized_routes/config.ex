@@ -9,29 +9,32 @@ defmodule PhxLocalizedRoutes.Config do
   @type t :: %__MODULE__{
           scopes: %{(binary | nil) => PhxLocalizedRoutes.Scope.Flat.t()},
           gettext_module: module | nil,
-          sigil: String.t() | nil,
-          sigil_original: String.t() | nil
+          sigil_localized: String.t(),
+          sigil_original: String.t()
         }
   @typep scope :: Scope.Flat.t()
   @typep scopes :: %{(binary | nil) => scope}
   @typep scope_tuple :: {binary | nil, scope}
 
+  @default_sigil_localized "~l"
+  @default_sigil_original "~o"
+
   @enforce_keys [:scopes]
-  defstruct [:scopes, :gettext_module, :sigil, :sigil_original]
+  defstruct [:scopes, :gettext_module, :sigil_localized, :sigil_original]
 
   @doc false
   @spec new!(keyword) :: t()
   def new!(opts) do
     scopes_flat = opts |> Keyword.get(:scopes_nested) |> Scopes.flatten()
     gettext = Keyword.get(opts, :gettext_module)
-    sigil = Keyword.get(opts, :sigil, "l")
-    sigil_original = Keyword.get(opts, :sigil_original, nil)
+    sigil_localized = Keyword.get(opts, :sigil_localized, @default_sigil_localized)
+    sigil_original = Keyword.get(opts, :sigil_original, @default_sigil_original)
 
     __MODULE__
     |> struct(%{
       scopes: scopes_flat,
       gettext_module: gettext,
-      sigil: sigil,
+      sigil_localized: sigil_localized,
       sigil_original: sigil_original
     })
     |> validate!()

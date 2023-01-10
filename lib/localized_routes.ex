@@ -64,6 +64,8 @@ defmodule PhxLocalizedRoutes.Private do
 
   require Logger
 
+  @phoenix_sigil "~p"
+
   # type aliases
   @type caller :: Macro.Env.t()
   @type env :: Macro.Env.t()
@@ -193,16 +195,17 @@ defmodule PhxLocalizedRoutes.Private do
     {config, _} = Code.eval_quoted(build_args.config)
 
     p1 =
-      if config.sigil == "p" do
-        "\nThe default sigil used by Phoenix Verified Routes is overriden due to the configuration in #{inspect(module)}.
+      if config.sigil_localized == @phoenix_sigil do
+        "\nThe default sigil used by Phoenix Verified Routes is overridden by Phoenix Localized Routes due to the configuration in `#{inspect(module)}`.
 
-      ~#{config.sigil || "l"}: localizes and verifies routes. (override)
-      ~#{config.sigil_original || "p"}: only verifies routes. (original)"
+      #{config.sigil_localized}: localizes and verifies routes. (override)
+      #{config.sigil_original}: only verifies routes. (original)"
       else
-        "\nRoutes can be localized using the ~#{config.sigil || "l"} sigil"
+        "\nRoutes can be localized using the #{config.sigil_localized} sigil"
       end
 
-    p2 = "\n\nDocumentation: https://hexdocs.pm/phoenix_localized_routes/usage.html#configuration"
+    p2 =
+      "\n\nDocumentation: https://hexdocs.pm/phoenix_localized_routes/usage.html#configuration\n"
 
     Logger.info([p1, p2])
 

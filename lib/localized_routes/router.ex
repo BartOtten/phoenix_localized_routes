@@ -85,6 +85,9 @@ defmodule PhxLocalizedRoutes.Router.Private do
   @domain "routes"
   @path_seperator "/"
   @interpolate ":"
+  @phoenix_sigil "~p"
+
+  alias PhxLocalizedRoutes.Config
 
   def after_routes_callback(env, _bytecode) do
     original_helper_mod = Module.safe_concat(env.module, :Helpers)
@@ -181,21 +184,19 @@ defmodule PhxLocalizedRoutes.Router.Private do
   def create_sigil(
         scopes,
         _context,
-        %{sigil: sigil, sigil_original: sigil_original, gettext_module: gettext_backend} = _opts
+        %Config{
+          sigil_localized: sigil_localized,
+          sigil_original: sigil_original,
+          gettext_module: gettext_backend
+        } = _opts
       ) do
     delegated_original =
-      if sigil == "p" do
-        if is_nil(sigil_original),
-          do:
-            raise(
-              ArgumentError,
-              "When overriding the default Phoenix Verified Routes sigil  ~p, the `sigil_original` is required in the configuration. See: https://hexdocs.pm/phoenix_localized_routes/usage.html"
-            )
-
-        sigil_name = String.to_atom("sigil_" <> sigil_original)
+      if sigil_localized == @phoenix_sigil do
+        "~" <> sigil_letter = sigil_original
+        sigil_fun_name = String.to_atom("sigil_" <> sigil_letter)
 
         quote do
-          defmacro unquote(sigil_name)(route, extra) do
+          defmacro unquote(sigil_fun_name)(route, extra) do
             quote do
               Phoenix.VerifiedRoutes.sigil_p(unquote(route), unquote(extra))
             end
@@ -203,11 +204,12 @@ defmodule PhxLocalizedRoutes.Router.Private do
         end
       end
 
-    sigil_name = String.to_atom("sigil_" <> sigil)
+    "~" <> sigil_letter = sigil_localized
+    sigil_fun_name = String.to_atom("sigil_" <> sigil_letter)
 
     localized =
       quote do
-        defmacro unquote(sigil_name)({:<<>>, meta, segments} = route, extra) do
+        defmacro unquote(sigil_fun_name)({:<<>>, meta, segments} = route, extra) do
           case_patterns = unquote(generate_case_patterns(scopes, gettext_backend))
 
           var =
@@ -264,7 +266,7 @@ defmodule PhxLocalizedRoutes.Router.Private do
       for {scope, scope_opts} <- scopes do
         {:<<>>, meta, segments} = route
 
-        segments =
+        new_segments =
           if is_nil(gettext_backend) or is_nil(scope),
             do: segments,
             else: [
@@ -277,7 +279,7 @@ defmodule PhxLocalizedRoutes.Router.Private do
             ]
 
         pattern = scope_opts.assign.scope_helper
-        route_ast = {:<<>>, meta, segments}
+        route_ast = {:<<>>, meta, new_segments}
 
         quote do
           unquote(pattern) ->
@@ -347,8 +349,7 @@ defmodule PhxLocalizedRoutes.Router.Private do
   def translate_segments(segments, gettext_backend, locale) do
     Gettext.put_locale(gettext_backend, locale)
 
-    segments
-    |> Enum.map(fn
+    Enum.map(segments, fn
       segment when is_binary(segment) ->
         path = URI.parse(segment).path
 
