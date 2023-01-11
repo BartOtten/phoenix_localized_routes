@@ -12,12 +12,12 @@ defmodule PhxLocalizedRoutesTest do
     Logger.flush()
   end
 
-  describe "pre-compile function print_compile_header/3" do
+  describe "pre-compile function pre_compile_header/3" do
     test "does not print a warning when no Gettext module is set" do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header("1.13.2", TestRouter, false, %{
+               P.pre_compile_header("1.13.2", TestRouter, false, %{
                  scopes: @scopes_flat
                })
              end) == ""
@@ -27,7 +27,7 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header("1.13.2", TestRouter, true, %{
+               P.pre_compile_header("1.13.2", TestRouter, true, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
@@ -38,7 +38,7 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header("1.13.2", TestRouter, false, %{
+               P.pre_compile_header("1.13.2", TestRouter, false, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
@@ -50,7 +50,7 @@ defmodule PhxLocalizedRoutesTest do
       Logger.flush()
 
       assert ExUnit.CaptureLog.capture_log(fn ->
-               P.print_compile_header("1.14.2", TestRouter, false, %{
+               P.pre_compile_header("1.14.2", TestRouter, false, %{
                  gettext_module: MyAppWeb.Gettext,
                  scopes: @scopes_flat
                })
@@ -147,7 +147,9 @@ defmodule PhxLocalizedRoutesCompilationTest do
   test "config returns a map with flattened and precomputed values" do
     assert LocRoutesConfig.config() == %Config{
              gettext_module: MyAppWeb.Gettext,
-             scopes: @scopes_flat
+             scopes: @scopes_flat,
+             sigil_localized: "~l",
+             sigil_original: "~o"
            }
   end
 end

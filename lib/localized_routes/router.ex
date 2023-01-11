@@ -34,7 +34,10 @@ defmodule PhxLocalizedRoutes.Router do
 
   defmacro __using__(_options) do
     quote location: :keep do
-      @after_compile {PhxLocalizedRoutes.Router.Private, :after_routes_callback}
+      if Module.get_attribute(__ENV__.module, :phoenix_helpers, true),
+        do: @after_compile({PhxLocalizedRoutes.Router.Private, :build_localized_helpers_module})
+
+      import PhxLocalizedRoutes.Router
     end
   end
 
@@ -71,18 +74,21 @@ defmodule PhxLocalizedRoutes.Router do
   @spec localize(module, opts :: list, do: Macro.t()) :: Macro.output()
   defmacro localize(conf, opts \\ [], do: context) do
     {conf, _} = Code.eval_quoted(conf)
-    Private.do_localize(conf, opts, context)
+    Private.do_localize(conf, opts, context, __CALLER__)
   end
 end
 
 defmodule PhxLocalizedRoutes.Router.Private do
   @moduledoc false
 
+  alias PhxLocalizedRoutes.Config
+
   @domain "routes"
   @path_seperator "/"
   @interpolate ":"
+  @phoenix_sigil "~p"
 
-  def after_routes_callback(env, _bytecode) do
+  def build_localized_helpers_module(env, _bytecode) do
     original_helper_mod = Module.safe_concat(env.module, :Helpers)
     loc_helper_mod = Module.concat(original_helper_mod, :Localized)
 
@@ -111,11 +117,24 @@ defmodule PhxLocalizedRoutes.Router.Private do
       )
 
     Module.create(loc_helper_mod, [prelude] ++ functions, Macro.Env.location(env))
+
     nil
   end
 
-  def do_localize(conf, opts, context) do
+  def build_verified_routes_module(opts, context, env) do
+    mod = Module.concat(env.module, :VerifiedRoutes)
+    sigil_ast = create_sigil(opts.scopes, context, opts)
+
+    Code.put_compiler_option(:ignore_module_conflict, true)
+    Module.create(mod, sigil_ast, Macro.Env.location(env))
+    Code.put_compiler_option(:ignore_module_conflict, false)
+  end
+
+  def do_localize(conf, opts, context, env) do
     opts = opts |> Enum.into(%{}) |> Map.merge(conf.config())
+
+    if function_exported?(Phoenix.VerifiedRoutes, :__info__, 1),
+      do: build_verified_routes_module(opts, context, env)
 
     [maybe_gettext_triggers(context, opts) | create_phx_scopes(opts.scopes, context, opts)]
   end
@@ -157,6 +176,124 @@ defmodule PhxLocalizedRoutes.Router.Private do
   def include_dgettext_call(part, opts) do
     quote do
       unquote(opts.gettext_module).dgettext(unquote(@domain), unquote(part))
+    end
+  end
+
+  # credo:disable-for-lines:80
+  def create_sigil(scopes, {marker, meta, _children} = route, opts)
+      when marker != :__block__ do
+    create_sigil(scopes, {:__block__, meta, [route]}, opts)
+  end
+
+  def create_sigil(
+        scopes,
+        _context,
+        %Config{
+          sigil_localized: sigil_localized,
+          sigil_original: sigil_original,
+          gettext_module: gettext_backend
+        } = _opts
+      ) do
+    delegated_original =
+      if sigil_localized == @phoenix_sigil do
+        "~" <> sigil_letter = sigil_original
+        sigil_fun_name = String.to_atom("sigil_" <> sigil_letter)
+
+        quote do
+          defmacro unquote(sigil_fun_name)(route, extra) do
+            quote do
+              Phoenix.VerifiedRoutes.sigil_p(unquote(route), unquote(extra))
+            end
+          end
+        end
+      end
+
+    "~" <> sigil_letter = sigil_localized
+    sigil_fun_name = String.to_atom("sigil_" <> sigil_letter)
+
+    localized =
+      quote do
+        defmacro unquote(sigil_fun_name)({:<<>>, meta, segments} = route, extra) do
+          case_patterns = unquote(generate_case_patterns(scopes, gettext_backend))
+
+          var =
+            Enum.filter(
+              __CALLER__.versioned_vars,
+              fn
+                {{var, _}, _} when var in [:socket, :conn, :assigns] ->
+                  true
+
+                other ->
+                  false
+              end
+            )
+            |> Enum.map(fn {{var, _}, _} -> var end)
+
+          cond do
+            :socket in var ->
+              quote do
+                case var!(socket).assigns.loc.scope_helper do
+                  unquote(case_patterns)
+                end
+              end
+
+            :conn in var ->
+              quote do
+                case var!(conn).private.phx_loc_routes.assign.scope_helper do
+                  unquote(case_patterns)
+                end
+              end
+
+            :assigns in var ->
+              quote do
+                case get_in(var!(assigns), [:loc, :scope_helper]) do
+                  unquote(case_patterns)
+                end
+              end
+
+            true ->
+              quote do
+                Phoenix.VerifiedRoutes.sigil_p(unquote(route), unquote(extra))
+              end
+          end
+        end
+      end
+
+    [delegated_original, localized]
+  end
+
+  def generate_case_patterns(scopes, gettext_backend) do
+    quote bind_quoted: [
+            scopes: Macro.escape(scopes),
+            gettext_backend: Macro.escape(gettext_backend)
+          ] do
+      cases =
+        for {scope, scope_opts} <- scopes do
+          {:<<>>, meta, segments} = route
+
+          # credo:disable-for-lines:10
+          new_segments =
+            if is_nil(gettext_backend) or is_nil(scope),
+              do: segments,
+              else: [
+                scope_opts.scope_prefix
+                | PhxLocalizedRoutes.Router.Private.translate_segments(
+                    segments,
+                    gettext_backend,
+                    scope_opts.assign.locale
+                  )
+              ]
+
+          pattern = scope_opts.assign.scope_helper
+          route_ast = {:<<>>, meta, new_segments}
+
+          quote do
+            unquote(pattern) ->
+              Phoenix.VerifiedRoutes.sigil_p(unquote(route_ast), unquote(extra))
+          end
+        end
+
+      List.flatten(cases)
     end
   end
 
@@ -206,9 +343,24 @@ defmodule PhxLocalizedRoutes.Router.Private do
   end
 
   # Gettext requires we set the current process locale
-  # in order to translate. This might ordinarily disrupt
-  # any user set locale. However since this is only executed
+  # in order to translate. Since this is only executed
   # at compile time it does not affect runtime behaviour.
+
+  def translate_segments(segments, gettext_backend, locale) do
+    Gettext.put_locale(gettext_backend, locale)
+
+    Enum.map(segments, fn
+      segment when is_binary(segment) ->
+        path = URI.parse(segment).path
+
+        path
+        |> String.split(@path_seperator)
+        |> Enum.map_join(@path_seperator, &translate_part(gettext_backend, &1))
+
+      other ->
+        other
+    end)
+  end
 
   def translate_paths(routes, gettext_backend, locale) do
     Gettext.put_locale(gettext_backend, locale)
@@ -226,7 +378,11 @@ defmodule PhxLocalizedRoutes.Router.Private do
 
   def translate_part(_backend, part) when part in ["", "*"], do: part
   def translate_part(_backend, @interpolate <> _rest = part), do: part
-  def translate_part(gettext_backend, part), do: Gettext.dgettext(gettext_backend, @domain, part)
+
+  def translate_part(gettext_backend, part) when is_binary(part),
+    do: Gettext.dgettext(gettext_backend, @domain, part)
+
+  def translate_part(_backend, part), do: part
 
   def shortest_helper(helpers) do
     helpers

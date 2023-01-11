@@ -2,7 +2,7 @@ defmodule PhxLocalizedRoutes.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/BartOtten/phoenix_localized_routes"
-  @version "0.1.3"
+  @version "0.1.3-rc.0"
   @name "Phoenix Localized Routes"
 
   def project do
@@ -70,7 +70,8 @@ defmodule PhxLocalizedRoutes.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
       {:floki, ">= 0.30.0", only: :test},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:makeup_diff, "~> 0.1.0", only: [:dev]}
     ]
   end
 

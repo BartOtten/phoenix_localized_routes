@@ -7,14 +7,24 @@ defmodule PhxLocalizedRoutes.Helpers do
 
   @doc ~S"""
   Marco used to wrap a Phoenix route and transform it into a localized
-  route. The localized routes use the `:scope_helper` to alter
-  the destination (alias) of the route on render.
+  route. The localized routes use the assigned `scope_helper` to alter
+  the destination of the route on render.
 
-  By default it uses the `scope_helper` from `Phoenix.LiveView.Socket` or `Plug.Conn`, keeping
+  By default it uses the `scope_helper` from the assigns in `Phoenix.LiveView.Socket` or `Plug.Conn`, keeping
   the user in it's current locale / scope. A custom `:scope_helper` can be provided through
   assigns in `loc_opts`.
 
-  **Example**
+  **Example using Phoenix Verified Route**
+
+  ```elixir
+  ~p"/products"
+  /products
+
+  loc_opts = %{assigns: %{scope_helper: "eu_nl"}}
+  loc_route(~p"/products", loc_opts)
+  /eu/nl/producten
+  ```
+  **Example using Phoenix Route helpers**
 
   ```elixir
   Routes.product_index_path(@socket, :index)
@@ -22,7 +32,7 @@ defmodule PhxLocalizedRoutes.Helpers do
 
   loc_opts = %{assigns: %{scope_helper: "eu_nl"}}
   loc_route(Routes.product_index_path(@socket, :index), loc_opts)
-  /eu/nl/products
+  /eu/nl/producten
   ```
 
   When no `:scope_helper` is found or when no matching helper function is exported, an
@@ -39,9 +49,45 @@ defmodule PhxLocalizedRoutes.Helpers do
   <% end %>
   ```
   """
+
   @spec loc_route(orig_route :: Macro.t(), loc_opts :: Scope.Flat.t() | nil) ::
           Macro.output()
-  defmacro loc_route(orig_route, loc_opts \\ nil) do
+  defmacro loc_route(orig_route, loc_opts \\ nil)
+
+  defmacro loc_route({:sigil_p, _meta, [orig_route, extra]}, nil) do
+    {router_module, sigil} = Private.get_sigil_macro(__CALLER__)
+
+    quote do
+      unquote(router_module).unquote(sigil)(unquote(orig_route), unquote(extra))
+    end
+  end
+
+  defmacro loc_route({:sigil_p, _, [orig_route, extra]}, loc_opts) do
+    {router_module, sigil} = Private.get_sigil_macro(__CALLER__)
+
+    quote generated: true, location: :keep do
+      # NOTE: breaking Macro Hygiene
+      # as sigils are not supposed to use options the usual way, the localized sigil
+      # uses the assigned scope_helper from the caller scope.
+      # By redefining it we can generate new localized routes and after we restore the
+      # original assigns.
+      orig_assigns = var!(assigns)
+
+      # overwrite
+      var!(assigns) = Map.put(orig_assigns, :loc, unquote(loc_opts).assign)
+
+      translated_route =
+        unquote(router_module).unquote(sigil)(unquote(orig_route), unquote(extra))
+
+      # restore
+      # credo:disable-for-next-line
+      var!(assigns) = orig_assigns
+
+      translated_route
+    end
+  end
+
+  defmacro loc_route(orig_route, loc_opts) do
     {helper_module, orig_helper_fn, conn_or_socket, args} = Private.fetch_vars(orig_route)
 
     quote bind_quoted: [
@@ -77,6 +123,19 @@ defmodule PhxLocalizedRoutes.Helpers.Private do
   alias Plug.Conn
 
   require Logger
+
+  def get_sigil_macro(module) do
+    Enum.find_value(module.macros, fn
+      {module, [{name, arity}]} when arity == 2 ->
+        module |> Atom.to_string() |> String.ends_with?("Router.VerifiedRoutes") && {module, name}
+
+      {module, [{_org_name, _org_arity}, {name, arity}]} when arity == 2 ->
+        module |> Atom.to_string() |> String.ends_with?("Router.VerifiedRoutes") && {module, name}
+
+      _other ->
+        false
+    end)
+  end
 
   def localize_route(_helper_module, _orig_helper_fn, _args, nil = _scope),
     do: {:ok, :original}
