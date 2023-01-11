@@ -80,6 +80,7 @@ defmodule PhxLocalizedRoutes.Helpers do
         unquote(router_module).unquote(sigil)(unquote(orig_route), unquote(extra))
 
       # restore
+      # credo:disable-for-next-line
       var!(assigns) = orig_assigns
 
       translated_route
@@ -126,13 +127,12 @@ defmodule PhxLocalizedRoutes.Helpers.Private do
   def get_sigil_macro(module) do
     Enum.find_value(module.macros, fn
       {module, [{name, arity}]} when arity == 2 ->
-        String.ends_with?(Atom.to_string(module), "Router.VerifiedRoutes") &&
-          {module, name}
+        module |> Atom.to_string() |> String.ends_with?("Router.VerifiedRoutes") && {module, name}
 
       {module, [{_org_name, _org_arity}, {name, arity}]} when arity == 2 ->
-        String.ends_with?(Atom.to_string(module), "Router.VerifiedRoutes") && {module, name}
+        module |> Atom.to_string() |> String.ends_with?("Router.VerifiedRoutes") && {module, name}
 
-      _ ->
+      _other ->
         false
     end)
   end

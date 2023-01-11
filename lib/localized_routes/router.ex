@@ -81,12 +81,12 @@ end
 defmodule PhxLocalizedRoutes.Router.Private do
   @moduledoc false
 
+  alias PhxLocalizedRoutes.Config
+
   @domain "routes"
   @path_seperator "/"
   @interpolate ":"
   @phoenix_sigil "~p"
-
-  alias PhxLocalizedRoutes.Config
 
   def build_localized_helpers_module(env, _bytecode) do
     original_helper_mod = Module.safe_concat(env.module, :Helpers)
@@ -179,6 +179,7 @@ defmodule PhxLocalizedRoutes.Router.Private do
     end
   end
 
+  # credo:disable-for-lines:80
   def create_sigil(scopes, {marker, meta, _children} = route, opts)
       when marker != :__block__ do
     create_sigil(scopes, {:__block__, meta, [route]}, opts)
@@ -266,30 +267,33 @@ defmodule PhxLocalizedRoutes.Router.Private do
             scopes: Macro.escape(scopes),
             gettext_backend: Macro.escape(gettext_backend)
           ] do
-      for {scope, scope_opts} <- scopes do
-        {:<<>>, meta, segments} = route
+      cases =
+        for {scope, scope_opts} <- scopes do
+          {:<<>>, meta, segments} = route
 
-        new_segments =
-          if is_nil(gettext_backend) or is_nil(scope),
-            do: segments,
-            else: [
-              scope_opts.scope_prefix
-              | PhxLocalizedRoutes.Router.Private.translate_segments(
-                  segments,
-                  gettext_backend,
-                  scope_opts.assign.locale
-                )
-            ]
+          # credo:disable-for-lines:10
+          new_segments =
+            if is_nil(gettext_backend) or is_nil(scope),
+              do: segments,
+              else: [
+                scope_opts.scope_prefix
+                | PhxLocalizedRoutes.Router.Private.translate_segments(
+                    segments,
+                    gettext_backend,
+                    scope_opts.assign.locale
+                  )
+              ]
 
-        pattern = scope_opts.assign.scope_helper
-        route_ast = {:<<>>, meta, new_segments}
+          pattern = scope_opts.assign.scope_helper
+          route_ast = {:<<>>, meta, new_segments}
 
-        quote do
-          unquote(pattern) ->
-            Phoenix.VerifiedRoutes.sigil_p(unquote(route_ast), unquote(extra))
+          quote do
+            unquote(pattern) ->
+              Phoenix.VerifiedRoutes.sigil_p(unquote(route_ast), unquote(extra))
+          end
         end
-      end
-      |> List.flatten()
+
+      List.flatten(cases)
     end
   end
 
@@ -342,13 +346,6 @@ defmodule PhxLocalizedRoutes.Router.Private do
   # in order to translate. Since this is only executed
   # at compile time it does not affect runtime behaviour.
 
-  # TODO: Rewrite translation functions to be less specific in input/output
-
-  def translate_paths(routes, gettext_backend, locale) do
-    Gettext.put_locale(gettext_backend, locale)
-    translate_paths_macro(routes, gettext_backend)
-  end
-
   def translate_segments(segments, gettext_backend, locale) do
     Gettext.put_locale(gettext_backend, locale)
 
@@ -363,6 +360,11 @@ defmodule PhxLocalizedRoutes.Router.Private do
       other ->
         other
     end)
+  end
+
+  def translate_paths(routes, gettext_backend, locale) do
+    Gettext.put_locale(gettext_backend, locale)
+    translate_paths_macro(routes, gettext_backend)
   end
 
   def translate_path({type, meta, [path | rest]}, gettext_backend) when is_binary(path) do
