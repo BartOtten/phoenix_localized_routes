@@ -1,9 +1,6 @@
-![Coveralls](https://img.shields.io/coveralls/github/BartOtten/phoenix_localized_routes)
-[![Build Status](https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml/badge.svg?event=push)](https://github.com/BartOtten/phoenix_localized_routes/actions/workflows/elixir.yml)
-[![Last Updated](https://img.shields.io/github/last-commit/BartOtten/phoenix_localized_routes.svg)](https://github.com/BartOtten/phoenix_localized_routes/commits/main)
-[![Hex.pm](https://img.shields.io/hexpm/v/phoenix_localized_routes)](https://hex.pm/packages/phoenix_localized_routes)
-![Hex.pm](https://img.shields.io/hexpm/l/phoenix_localized_routes)
-
+> [!WARNING]
+> This lib is deprecated. It is succeeded by the more powerful and versatile
+> Phoenix Router lib [Routex](https://github.com/BartOtten/routex/)
 
 # Phoenix Localized Routes
 
