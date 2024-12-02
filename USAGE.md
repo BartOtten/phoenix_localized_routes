@@ -11,10 +11,11 @@
 
 You can install this library by adding it to your list of dependencies in `mix.exs`:
 
-```elixir
+```diff
 def deps do
   [
-    {:phoenix_localized_routes, "~> 0.1.0"}
+     ...other deps
++    {:phoenix_localized_routes, "~> 0.1.0"}
   ]
 end
 ```
@@ -27,40 +28,50 @@ modules / files need changes.
 `Phoenix Localized Routes` adds localization to the helpers created by Phoenix;
 no code changes in controllers and (live)views necessary.
 
-```elixir
+```diff
 # file: lib/example_web.ex
 
+# in router
++  use PhxLocalizedRoutes.Router
+
 # in controller
--  alias ExampleWeb.Router.Helpers, as: Routes
+   unquote(verified_routes())
 +  unquote(loc_helpers())
 
 # in live_view
-+  on_mount(ExampleWeb.LocalizedRoutes.LiveHelpers)
+      unquote(html_helpers())
++     on_mount(ExampleWeb.LocalizedRoutes.LiveHelpers)
 
-# in router
-+  import PhxLocalizedRoutes.Router
-+  use PhxLocalizedRoutes.Router
 
 # in view_helpers
--  alias ExampleWeb.Router.Helpers, as: Routes
+   unquote(verified_routes())
 +  unquote(loc_helpers())
 
 # insert new private function
 +  defp loc_helpers do
 +    quote do
 +      import PhxLocalizedRoutes.Helpers
-+      alias ExampleWeb.Router.Helpers, as: OriginalRoutes
-+      alias ExampleWeb.Router.Helpers.Localized, as: Routes
++      import ExampleWeb.Router.VerifiedRoutes
++
 +      alias ExampleWeb.LocalizedRoutes, as: Loc
++
++      # Uncomment when using the Phoenix Route Helpers
++      # alias ExampleWeb.Router.Helpers, as: OriginalRoutes
++      # alias ExampleWeb.Router.Helpers.Localized, as: Routes
++
++      # Uncomment when overriding the default Verified Route sigil
++      import Phoenix.VerifiedRoutes, except: [sigil_p: 2]
 +    end
 +  end
 ```
 
 
-```elixir
+```diff
 # file: lib/example_web/router.ex
 
 # Add to browser pipeline
+  pipeline :browser do
+    [...other plugs]
 +   plug(PhxLocalizedRoutes.Plug)
 ```
 
@@ -74,7 +85,9 @@ application. The example shows a nested configuration using the default
 It is possible to set:
 
   * `:scopes` - scopes as map of maps, keys are used as URL segments (slugs).
-  * `:gettext_module` - `Gettext` module to extract URL segments and translate them.
+  * `:gettext_module` - `Gettext` module used to extract and translate URL segments.
+  * `:sigil_localized` - Sigil used for Localized Verified Routes. (default: "~l")
+  * `:sigil_original` - Sigil used for the original Verified Routes when `:sigil_localized` is set to "~p" (default: "~o")
 
 For each local scope you can set.
 
@@ -144,7 +157,7 @@ end
 Wrap the routes within the scope in an `localized` block, providing your created
 `LocalizedRoutes` module as argument.
 
-```elixir
+```diff
 # file: router.ex
     scope "/", ExampleWeb do
 +     localize ExampleWeb.LocalizedRoutes do
@@ -181,7 +194,7 @@ You can translate the route segments in the `.po`-file and recompile the Router
 module to generate the new multilingual routes.
 
 Finally, Phoenix Localized Routes is able to recompile routes whenever PO files
-change. To enable this feature, the :gettext compiler needs to be added to the
+change. To enable this feature **in Elixir < 1.14**, the :gettext compiler needs to be added to the
 list of Mix compilers.
 
 In mix.exs:
@@ -193,3 +206,47 @@ def project do
   ]
 end
 ```
+
+## Using Phoenix Verified Routes
+Phoenix 1.7 includes a new Phoenix.VerifiedRoutes feature which
+provides ~p for route generation with compile-time verification.
+
+Phoenix Localized Routes has support for *localized* Verified Routes using
+sigil ~l. The sigil used can be customized by setting the `sigil_localized`
+option in the configuration.
+
+### Overriding sigil ~p
+The default sigil ~p used by Phoenix.VerifiedRoutes can be
+overridden by setting `sigil_localized: "~p"`. When doing so, the original
+sigil is by default renamed to ~o. This can be customized by setting
+the `sigil_original` option.
+
+**Example**
+```elixir
+    sigil_localized: "~p",
+    sigil_original: "~q"
+```
+
+To prevent import conflicts the original `sigil_p/2` function of `Phoenix.VerifiedRoutes`
+should be excluded from import. This is done by adding an exception in `loc_helpers/0`.
+
+```diff
+# file: lib/example_web.ex
+  defp loc_helpers do
+    quote do
+       [...]
++      # Uncomment when overriding the default Verified Route sigil
++      import Phoenix.VerifiedRoutes, except: [sigil_p: 2]
+  end
+```
+
+As you normally don't want different static files per local scope, adjust
+their references.
+```diff
+    # file components/layouts/root.html.heex
+-   <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+-   <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
++   <link phx-track-static rel="stylesheet" href={~o"/assets/app.css"} />
++   <script defer phx-track-static type="text/javascript" src={~o"/assets/app.js"}>
+```
+

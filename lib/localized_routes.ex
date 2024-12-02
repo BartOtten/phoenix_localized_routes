@@ -13,7 +13,9 @@ defmodule PhxLocalizedRoutes do
 
   @type opts :: [
           scopes: %{binary => opts_scope},
-          gettext_module: module
+          gettext_module: module,
+          sigil: nil | String.t(),
+          sigil_original: nil | String.t()
         ]
   @type opts_scope :: %{
           optional(:assign) => %{atom => any},
@@ -62,6 +64,8 @@ defmodule PhxLocalizedRoutes.Private do
 
   require Logger
 
+  @phoenix_sigil "~p"
+
   # type aliases
   @type caller :: Macro.Env.t()
   @type env :: Macro.Env.t()
@@ -69,14 +73,17 @@ defmodule PhxLocalizedRoutes.Private do
 
   @spec compile_actions(opts, caller, env) :: Macro.output()
   def compile_actions(opts, caller, env) do
-    print_compile_header(System.version(), caller.module, in_compilers?(:gettext), opts)
+    pre_compile_header(System.version(), caller.module, in_compilers?(:gettext), opts)
 
     if in_deps?(:phoenix_live_view),
       do: create_live_helper_module(caller.module, env)
 
-    opts
-    |> prepare_build_args()
-    |> build_ast()
+    build_args = prepare_build_args(opts)
+    ast = build_ast(build_args)
+
+    post_compile_header(caller.module, build_args)
+
+    ast
   end
 
   @spec prepare_build_args(opts) :: %{
@@ -159,13 +166,13 @@ defmodule PhxLocalizedRoutes.Private do
     |> Enum.member?(app)
   end
 
-  @spec print_compile_header(
+  @spec pre_compile_header(
           sys_version :: String.t(),
           caller_module :: module,
           gettext_in_compilers? :: boolean,
           opts :: opts
         ) :: :ok
-  def print_compile_header(sys_version, caller_module, gettext_in_compilers?, config_mod) do
+  def pre_compile_header(sys_version, caller_module, gettext_in_compilers?, config_mod) do
     unless Version.match?(sys_version, ">= 1.14.0") or
              is_nil(config_mod[:gettext_module]) or
              gettext_in_compilers? do
@@ -179,6 +186,28 @@ defmodule PhxLocalizedRoutes.Private do
         "When route translations are updated, run `mix compile --force #{router_module}`"
       )
     end
+
+    :ok
+  end
+
+  @spec post_compile_header(module, build_args :: Macro.input()) :: :ok
+  def post_compile_header(module, build_args) do
+    {config, _} = Code.eval_quoted(build_args.config)
+
+    p1 =
+      if config.sigil_localized == @phoenix_sigil do
+        "\nThe default sigil used by Phoenix Verified Routes is overridden by Phoenix Localized Routes due to the configuration in `#{inspect(module)}`.
+
+      #{config.sigil_localized}: localizes and verifies routes. (override)
+      #{config.sigil_original}: only verifies routes. (original)"
+      else
+        "\nRoutes can be localized using the #{config.sigil_localized} sigil"
+      end
+
+    p2 =
+      "\n\nDocumentation: https://hexdocs.pm/phoenix_localized_routes/usage.html#configuration\n"
+
+    Logger.info([p1, p2])
 
     :ok
   end

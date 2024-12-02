@@ -65,6 +65,11 @@ a `LocalizedRoutes` backend module.
 
 As a result, you have full control over the format, language and assigns of localized URLs.
 
+### Verified Routes
+
+Phoenix Localized Routes uses a user-defined sigil (default: `~l`) to support auto-localized
+paths and URLs. Each localized route is verified in the same way the original routes are.
+
 ### Route Helpers
 
 Phoenix Localized Routes creates locale aware replicas of the standard Phoenix helper

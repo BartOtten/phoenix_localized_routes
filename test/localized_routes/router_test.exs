@@ -43,8 +43,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
     do: get("/paginas/nieuw", MyAppWeb.PageController, :new)
   )
 
-  test "after_routes_callback does not raise" do
-    assert nil == P.after_routes_callback(%Macro.Env{module: MultiLangRouter}, <<>>)
+  test "build_localized_helpers_module does not raise" do
+    assert nil == P.build_localized_helpers_module(%Macro.Env{module: MultiLangRouter}, <<>>)
     assert Code.ensure_compiled!(MyAppWeb.MultiLangRouter.Helpers.Localized)
   end
 
@@ -60,7 +60,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
         live("/", HomeLive, :index)
         live("/products/:id/edit", ProductLive.Index, :edit)
         live("/wildcard/*", WildcardController)
-      end
+      end,
+      __ENV__
     )
   end
 
@@ -76,7 +77,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
         live("/", HomeLive, :index)
         live("/products/:id/edit", ProductLive.Index, :edit)
         live("/wildcard/*", WildcardController)
-      end
+      end,
+      __ENV__
     )
   end
 
@@ -84,7 +86,8 @@ defmodule PhxLocalizedRoutes.RouterTest do
     P.do_localize(
       MyAppWeb.LocalizedRoutes,
       [],
-      quote(do: get("/users/register", UserController, :new))
+      quote(do: get("/users/register", UserController, :new)),
+      __ENV__
     )
   end
 
