@@ -1,6 +1,10 @@
 > [!WARNING]
-> This lib is deprecated. It is succeeded by the more powerful and versatile
+> This lib is deprecated. It is succeeded by the most powerful and versatile
 > Phoenix Router lib [Routex](https://github.com/BartOtten/routex/)
+>
+> Routex ships with all features Phoenix Localized Routes offered and many more.
+> Such as internationalization (i18n), localization (l10n), multilingual routes,
+> alternative routes generation and superb Verified Routes support.
 
 # Phoenix Localized Routes
 
